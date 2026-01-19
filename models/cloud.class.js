@@ -2,6 +2,7 @@ class Cloud extends movableObject {
 
     height = 400;
     width = 700;
+    speed = 0.1;
 
     constructor() {
         super().loadImage('../img/img/5_background/layers/4_clouds/1.png');
@@ -15,11 +16,10 @@ class Cloud extends movableObject {
     //img/img/5_background/layers/4_clouds/1.png
 
     moveClouds() {
-        setInterval( () => {
-            this.x -= 0.1;
-        }, 1000 / 60)
+        this.moveLeft();
     }
     
+
 
 }
 
