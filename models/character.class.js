@@ -9,12 +9,13 @@ class Character extends movableObject{
             '../img/img/2_character_pepe/2_walk/W-26.png'
         ];
 
-        
+        world;
+        speed = 0.4;
 
     constructor() {
         super().loadImage('../img/img/2_character_pepe/2_walk/W-21.png')
         this.loadImages(this.IMG_WALKING);
-        this.animate();
+        this.movement();
         this.height = 330;
         this.width = 150;
         this.y = 120;
@@ -25,12 +26,60 @@ class Character extends movableObject{
 
     }
 
-    animate() {
+    animateRight() {
         setInterval (() => {
-            let i = this.currentImage % this.IMG_WALKING.length;
-            let path = this.IMG_WALKING[i];
-            this.img = this.classImages[path];
-            this.currentImage++;
+            if (this.world.keyboard.RIGHT || this.world.keyboard.D) {
+                let i = this.currentImage % this.IMG_WALKING.length;
+                let path = this.IMG_WALKING[i];
+                this.img = this.classImages[path];
+                this.currentImage++;
+            } 
         }, 1000/15)
+    }
+
+    animateLeft() {
+        setInterval (() => {
+            if (this.world.keyboard.LEFT || this.world.keyboard.A) {
+                let i = this.currentImage % this.IMG_WALKING.length;
+                let path = this.IMG_WALKING[i];
+                this.img = this.classImages[path];
+                this.currentImage++;
+            } 
+        }, 1000/15)
+    }
+
+    movement() {
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.D) {
+            this.otherDirection = false;
+            this.animateRight();
+            this.moveRight();
+            //this.world.generateMap()
+            
+            }
+            if (this.world.keyboard.LEFT || this.world.keyboard.A) {
+                this.otherDirection = true;
+                this.animateLeft();
+                this.moveLeft();
+            }
+        }, 100)  
+    }
+
+    moveRight(){
+        setInterval( () => {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.D) {
+                this.x += this.speed;
+            }
+            this.world.camera_x = -this.x
+        }, 1000 / 60)
+    };
+
+    moveLeft() {
+        setInterval( () => {
+            if (this.world.keyboard.LEFT || this.world.keyboard.A) {
+                this.x -= this.speed;
+            }
+            this.world.camera_x = -this.x
+        }, 1000 / 60)
     }
 }

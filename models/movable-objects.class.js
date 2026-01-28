@@ -7,11 +7,8 @@ class movableObject {
     width = 100;
     height = 100;
     speed = 0.2;
+    otherDirection = false;
 
-
-    moveRight(){
-        console.log('moving-right');
-    };
 
     loadImage(path) {
         this.img = new Image();
@@ -31,4 +28,6 @@ class movableObject {
             this.x -= this.speed;
         }, 1000 / 60)
     }
+
+    
 }
