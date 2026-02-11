@@ -7,7 +7,7 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    img.src = '../img/img/9_intro_outro_screens/start/startscreen_1.png';
+    //img.src = '../img/img/9_intro_outro_screens/start/startscreen_1.png';
     console.log('my character is', world.character)
 }
 

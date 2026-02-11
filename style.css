@@ -9,7 +9,6 @@ body {
 
 canvas {
     background-color: black;
-    transform: translate(-50%, -50%);
 }
 
 #startScreen {

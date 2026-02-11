@@ -2,26 +2,7 @@ class World {
 
     character = new Character();
 
-    enemies = [
-    new chicken(), 
-    new chicken(), 
-    new chicken()
-    ];
-    
-    clouds = [
-    new Cloud()
-    ]
-
-    backgroundObjects = [
-        new BackgroundObject('img/img/5_background/layers/air.png', 0, 0),
-        new BackgroundObject('img/img/5_background/layers/3_third_layer/1.png', 0, 0),
-        new BackgroundObject('img/img/5_background/layers/2_second_layer/1.png', 0, 0),
-        new BackgroundObject('img/img/5_background/layers/1_first_layer/1.png', 0, 0),
-        new BackgroundObject('img/img/5_background/layers/air.png', 720, 0),
-        new BackgroundObject('img/img/5_background/layers/3_third_layer/2.png', 720, 0),
-        new BackgroundObject('img/img/5_background/layers/2_second_layer/2.png', 720, 0),
-        new BackgroundObject('img/img/5_background/layers/1_first_layer/2.png', 720, 0),
-    ];
+    level = level1;
     ctx;
     canvas;
     keyboard;
@@ -34,6 +15,7 @@ class World {
         this.keyboard = keyboard
         this.draw()
         this.setWorld();
+        //goNotOutOfMap()
     }
 
     setWorld() {
@@ -43,11 +25,13 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectToMap(this.backgroundObjects);
-        this.addObjectToMap(this.clouds);
+        this.addObjectToMap(this.level.backgroundObjects);
+        this.addObjectToMap(this.level.clouds);
+        this.addObjectToMap(this.level.bottles);
+        this.addObjectToMap(this.level.coins);
         this.addToMap(this.character);
-        this.addObjectToMap(this.enemies);
-        this.generateMap();
+        this.addObjectToMap(this.level.enemies);
+        //this.generateMap();
         this.ctx.translate(-this.camera_x, 0);
         
 
@@ -75,10 +59,11 @@ class World {
         return;
         }
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        mo.draw(this.ctx);
+        mo.drawHitbox(this.ctx);
+
         if (mo.otherDirection) {
-            mo.x = mo.x * -1;
-            this.ctx.restore();
+            this.resetflipImage(mo);
         }
     }
 
@@ -89,46 +74,58 @@ class World {
         mo.x = mo.x * -1;
     }
 
-    generateMap() {
-      const TILE = 720;
-      const PRELOAD = 300; // wie früh nachladen
-
-      // rechte sichtbare Kante in World-Koordinaten
-      const viewRight = -this.camera_x + this.canvas.width;
-
-      // rechteste vorhandene Hintergrund-X Position
-      const maxX = Math.max(...this.backgroundObjects.map(o => o.x));
-
-      // Guard-Variable initialisieren
-      if (this.nextRightX === undefined) this.nextRightX = maxX + TILE;
-
-      // Wenn wir nahe am Ende sind: rechts 2 Tiles anhängen
-      if (viewRight >= maxX + TILE - PRELOAD) {
-        const x = this.nextRightX;
-
-        const addedBG = [
-          new BackgroundObject('img/img/5_background/layers/air.png', x, 0),
-          new BackgroundObject('img/img/5_background/layers/3_third_layer/1.png', x, 0),
-          new BackgroundObject('img/img/5_background/layers/2_second_layer/1.png', x, 0),
-          new BackgroundObject('img/img/5_background/layers/1_first_layer/1.png', x, 0),
-
-          new BackgroundObject('img/img/5_background/layers/air.png', x + TILE, 0),
-          new BackgroundObject('img/img/5_background/layers/3_third_layer/2.png', x + TILE, 0),
-          new BackgroundObject('img/img/5_background/layers/2_second_layer/2.png', x + TILE, 0),
-          new BackgroundObject('img/img/5_background/layers/1_first_layer/2.png', x + TILE, 0),
-        ];
-
-        // WICHTIG: wirklich in backgroundObjects aufnehmen
-        this.backgroundObjects.push(...addedBG);
-
-        // Pointer weiterschieben (weil du 2 Tiles addest)
-        this.nextRightX += TILE * 2;
-      }
+    resetflipImage(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 
-    goNotOutOfMap() {
-        const charWorldX = character.x - camera_x;
-    }
+    
+
+    // generateMap() {
+    //   const TILE = 720;
+    //   const PRELOAD = 300; // wie früh nachladen
+
+    //   // rechte sichtbare Kante in World-Koordinaten
+    //   const viewRight = -this.camera_x + this.canvas.width;
+
+    //   // rechteste vorhandene Hintergrund-X Position
+    //   const maxX = Math.max(...this.backgroundObjects.map(o => o.x));
+
+    //   // Guard-Variable initialisieren
+    //   if (this.nextRightX === undefined) this.nextRightX = maxX + TILE;
+
+    //   // Wenn wir nahe am Ende sind: rechts 2 Tiles anhängen
+    //   if (viewRight >= maxX + TILE - PRELOAD) {
+    //     const x = this.nextRightX;
+
+    //     const addedBG = [
+    //       new BackgroundObject('img/img/5_background/layers/air.png', x, 0),
+    //       new BackgroundObject('img/img/5_background/layers/3_third_layer/1.png', x, 0),
+    //       new BackgroundObject('img/img/5_background/layers/2_second_layer/1.png', x, 0),
+    //       new BackgroundObject('img/img/5_background/layers/1_first_layer/1.png', x, 0),
+
+    //       new BackgroundObject('img/img/5_background/layers/air.png', x + TILE, 0),
+    //       new BackgroundObject('img/img/5_background/layers/3_third_layer/2.png', x + TILE, 0),
+    //       new BackgroundObject('img/img/5_background/layers/2_second_layer/2.png', x + TILE, 0),
+    //       new BackgroundObject('img/img/5_background/layers/1_first_layer/2.png', x + TILE, 0),
+    //     ];
+
+    //     // WICHTIG: wirklich in backgroundObjects aufnehmen
+    //     this.backgroundObjects.push(...addedBG);
+
+    //     // Pointer weiterschieben (weil du 2 Tiles addest)
+    //     this.nextRightX += TILE * 2;
+    //   }
+    // }
+
+    // goNotOutOfMap() {
+    //     const minWorldX = 0;
+    //     const charWorldX = character.x - camera_x;
+    //     if (charWorldX <= 0) {
+    //         this.character.x = 0;
+    //     }
+
+    // }
 
 
 }
