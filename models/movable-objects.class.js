@@ -16,8 +16,11 @@ class movableObject extends DrawableObject {
     }
 
     applyGravity() {
+        if (this.dead) return;
+        
         setInterval(()=> {
             if (this.speedY > 0 || this.isInAir()) {
+            this.prevY = this.y;
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
             }
@@ -60,10 +63,21 @@ class movableObject extends DrawableObject {
     }
 
     isColliding(mo) {
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+        this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+        this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+        this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    }
+
+
+    collidesWithItems(mo) {
         return this.x + this.width > mo.x &&
         this.y + this.height > mo.y &&
-        this.x < mo.x &&
-        this.y < mo.y + mo.height
+        this.x < mo.x + mo.width &&
+        this.y < mo.y + mo.height;
     }
+
+    
+
     
 }

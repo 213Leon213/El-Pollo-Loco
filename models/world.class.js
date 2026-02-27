@@ -15,11 +15,29 @@ class World {
         this.keyboard = keyboard
         this.draw()
         this.setWorld();
-        //goNotOutOfMap()
+        this.checkCollisions();
+        this.jumpOnEnemy();
+        this.collectCoins();
+        this.collectBottles();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        if (this.character.hurt) return;
+        
+        setInterval(() => {
+            this.level.enemies.forEach((e) => {
+               if (this.character.isColliding(e)) {
+                this.character.hp -= e.damage;
+                this.character.hurt = true;
+                this.character.animateHurt();
+                console.log('collision between character and enemy detected', this.character.hp);
+               }
+            })
+        },500)
     }
 
     draw() {
@@ -29,8 +47,8 @@ class World {
         this.addObjectToMap(this.level.clouds);
         this.addObjectToMap(this.level.bottles);
         this.addObjectToMap(this.level.coins);
-        this.addToMap(this.character);
         this.addObjectToMap(this.level.enemies);
+        this.addToMap(this.character);
         //this.generateMap();
         this.ctx.translate(-this.camera_x, 0);
         
@@ -61,6 +79,7 @@ class World {
 
         mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
+        mo.drawOffsetBox(this.ctx);
 
         if (mo.otherDirection) {
             this.resetflipImage(mo);
@@ -79,7 +98,75 @@ class World {
         this.ctx.restore();
     }
 
+    jumpOnEnemy() {
+          setInterval(()=>{
+            this.level.enemies.forEach((e) => {
+            const prevBottom = this.character.prevY + this.character.height - this.character.offset.bottom;
+            const currentBottom = this.character.y + this.character.height - this.character.offset.bottom;
+            const enemyTop = e.y + e.offset.top;
+            if (this.character.isColliding(e) && prevBottom <= enemyTop && currentBottom > enemyTop && !e.dead) {
+            this.chickenIsDead(e);
+        }
+        })  
+        })
+    }
+
+    collectCoins() {
+        setInterval(() => {
+        this.level.coins.forEach( c => {
+                if (this.character.collidesWithItems(c)) {
+                    c.animateCoinCollect(this.character);
+                    if (c.isCollected == false) {
+                        c.isCollected = true;
+                        this.character.coins += 1;
+                    }
+                    this.charCenter = c.getCenterOfObject(this.character);
+                    this.coinCenter = c.getCenterOfObject(c);
+                    if ((Math.abs(this.charCenter.x - this.coinCenter.x)) <= 5 && (Math.abs(this.charCenter.y - this.coinCenter.y)) <= 5 || c.width < 15 || c.height < 15) {
+                       this.level.coins = this.level.coins.filter(coin => !coin.isCollected);
+                    }
+                }
+        });  
+        }, 1000 / 25)
+    }
+
+    collectBottles() {
+        setInterval(() => {
+        this.level.bottles.forEach( b => {
+                if (this.character.collidesWithItems(b)) {
+                    b.animateBottleCollect(this.character);
+                    if (b.isCollected == false) {
+                        b.isCollected = true;
+                        this.character.bottles += 1;
+                    }
+                    this.charCenter = b.getCenterOfObject(this.character);
+                    this.bottleCenter = b.getCenterOfObject(b);
+                    if ((Math.abs(this.charCenter.x - this.bottleCenter.x)) <= 5 && (Math.abs(this.charCenter.y - this.bottleCenter.y)) <= 5 || b.width < 15 || b.height < 15) {
+                       this.level.bottles = this.level.bottles.filter(bottle => !bottle.isCollected);
+                    }
+                }
+        });  
+        }, 1000 / 25)
+    }
     
+
+    chickenIsDead(e) {
+        e.dead = true;
+        e.damage = 0;
+        e.img.src = '../img/img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
+        e.draw(this.ctx);
+        setTimeout(() => {
+       this.level.enemies = this.level.enemies.filter(e => !e.dead);
+       }, 500)
+    }
+
+    diff(e) {
+       const playerBottom =  this.character.y + this.character.height - this.character.offset.bottom;
+       const enemyTop = e.y + e.offset.top;
+       const difference = playerBottom - enemyTop;
+       return difference;
+    }
+
 
     // generateMap() {
     //   const TILE = 720;

@@ -2,6 +2,7 @@ class Bottle extends Objects{
 
     img;
     damage = 50;
+    isCollected = false;
 
     constructor() {
         super();
@@ -11,5 +12,23 @@ class Bottle extends Objects{
         ];
         this.img = new Image();
         this.img.src = imagesBottles[Math.floor(Math.random() * imagesBottles.length)];
+    }
+
+    offset = {
+        top: 40,
+        bottom: 20,
+        right: 60,
+        left: 60
+    }
+
+    animateBottleCollect(character) {
+        const targetX = character.x + character.width / 2;
+        const targetY = character.y + character.height / 2 + 60;
+        const bottleCenterX = this.x + this.width / 2;
+        const bottleCenterY = this.y + this.height / 2;
+        this.x += (targetX - bottleCenterX) * 0.2;
+        this.y += (targetY - bottleCenterY) * 0.2;
+        this.width -= 10;
+        this.height -= 10;
     }
 }

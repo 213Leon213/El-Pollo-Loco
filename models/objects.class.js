@@ -6,4 +6,12 @@ class Objects extends DrawableObject {
     constructor() {
     super();
     }
+
+    getCenterOfObject(obj) {
+        const targetX = obj.x + obj.width / 2;
+        const targetY = obj.y + obj.height / 2;
+        const target = {x: targetX, y: targetY}
+        return target;
+    }
+
 }
