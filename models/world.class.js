@@ -8,6 +8,7 @@ class World {
     keyboard;
     camera_x = 0;
     currentImage = 0;
+    throwableBottles = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -49,6 +50,7 @@ class World {
         this.addObjectToMap(this.level.coins);
         this.addObjectToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectToMap(this.throwableBottles);
         //this.generateMap();
         this.ctx.translate(-this.camera_x, 0);
         
@@ -76,7 +78,7 @@ class World {
         if (mo.otherDirection) this.ctx.restore(); // falls flipImage save/translate macht
         return;
         }
-
+        //console.log("drawing object:", mo);
         mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
         mo.drawOffsetBox(this.ctx);
@@ -166,6 +168,23 @@ class World {
        const difference = playerBottom - enemyTop;
        return difference;
     }
+
+    createBottleToThrow() {
+        if (this.throwableBottles.length >= this.character.bottles) return;
+
+        const bx = this.character.x + this.character.width /2;
+        const by = this.character.y + this.character.height /2;
+        const b = new ThrowBottle(bx, by);
+        this.throwableBottles.push(b);
+    }
+
+    spawnThrowBottle() {
+        this.throwableBottles.forEach((b) => {
+            b.draw(this.ctx);
+        })
+    }
+
+    mov
 
 
     // generateMap() {
