@@ -47,6 +47,7 @@ class Character extends movableObject{
         dead = false;
         bottles = 0;
         coins = 0;
+        ePressed;
 
     constructor() {
         super().loadImage('../img/img/2_character_pepe/2_walk/W-21.png')
@@ -205,16 +206,22 @@ class Character extends movableObject{
         }, 500)
     }
 
-    throwBottle() {
-        
+    throwBottle() {   
         if (this.bottles == 0) return;
 
-        if (this.world.keyboard.DOWN || this.world.keyboard.E) {
+        if (this.world.keyboard.E && !this.ePressed) {
             this.world.createBottleToThrow();
             this.world.moveBottle();
+            this.world.bottleThrown();
+            if(this.bottles > 0) {
+            this.bottles = this.bottles - 1};
+            this.ePressed = true;
             //this.world.spawnThrowBottle();
         }
-
+        if (!this.world.keyboard.E) {
+            this.ePressed = false;
+            
+        }
         
     }
 }

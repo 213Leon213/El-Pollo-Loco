@@ -2,6 +2,9 @@ class ThrowBottle extends movableObject {
 
     img;
     thrown = false;
+    splashes = false;
+    speed = 40;
+    acceleration = 4.5;
 
     IMG_THROW = [
         '../img/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -24,12 +27,14 @@ class ThrowBottle extends movableObject {
         this.loadImages(this.IMG_SPLASH);
         this.x = x;
         this.y = y;
-        this.animate(this.IMG_THROW);
+        if (!this.splashes) {this.animate(this.IMG_THROW)} else {this.splashAnimation(this.IMG_SPLASH)};
     }
 
     
 
-
+    splashAnimation() {
+        
+    }
 
 
 

@@ -9,6 +9,7 @@ class World {
     camera_x = 0;
     currentImage = 0;
     throwableBottles = [];
+    thrownBottles = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -50,7 +51,7 @@ class World {
         this.addObjectToMap(this.level.coins);
         this.addObjectToMap(this.level.enemies);
         this.addToMap(this.character);
-        this.addObjectToMap(this.throwableBottles);
+        this.addObjectToMap(this.thrownBottles);
         //this.generateMap();
         this.ctx.translate(-this.camera_x, 0);
         
@@ -178,14 +179,41 @@ class World {
         this.throwableBottles.push(b);
     }
 
-    spawnThrowBottle() {
-        this.throwableBottles.forEach((b) => {
-            b.draw(this.ctx);
+
+    moveBottle() {
+        this.throwableBottles.forEach((bo) => {
+            setInterval(() => {
+            if (this.character.otherDirection) {
+                bo.x -= bo.speed;
+                bo.y += bo.acceleration;
+            }
+            else {
+                bo.x += bo.speed;
+                bo.y += bo.acceleration;
+            };
+            }, 100)
         })
     }
 
-    mov
+    bottleThrown() {
+        console.log('aufgerufen');
+        if (this.throwableBottles.length == 0) return;
 
+        let bottle = this.throwableBottles.splice(0, 1)[0];
+        this.thrownBottles.push(bottle);
+        bottle.thrown = true;
+    }
+
+    splashed() {
+        this.thrownBottles.forEach((tB) => {
+            if (tB.y >= 680 || bottleColideEnemy(tB)) {
+                tB.splashes = true;
+                splashAnimation();
+                splashdelete();
+            }
+        })
+    }
+    
 
     // generateMap() {
     //   const TILE = 720;
