@@ -169,10 +169,7 @@ class Character extends movableObject{
             if (this.world.keyboard.UP || this.world.keyboard.W || this.world.keyboard.SPACE && !this.isInAir()) {
                 this.jump();
             }
-            if (this.world.keyboard.DOWN || this.world.keyboard.E) {
-                this.throwBottle();
-            }
-            else{return}
+            this.throwBottle();
         }, 1000 / 60)  
     }
 
@@ -210,11 +207,10 @@ class Character extends movableObject{
         if (this.bottles == 0) return;
 
         if (this.world.keyboard.E && !this.ePressed) {
-            this.world.createBottleToThrow();
-            this.world.moveBottle();
+            //this.world.createBottleToThrow();
             this.world.bottleThrown();
             if(this.bottles > 0) {
-            this.bottles = this.bottles - 1};
+            this.bottles -= 1};
             this.ePressed = true;
             //this.world.spawnThrowBottle();
         }

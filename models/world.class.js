@@ -8,7 +8,6 @@ class World {
     keyboard;
     camera_x = 0;
     currentImage = 0;
-    throwableBottles = [];
     thrownBottles = [];
 
     constructor(canvas, keyboard) {
@@ -83,7 +82,7 @@ class World {
         mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
         mo.drawOffsetBox(this.ctx);
-
+    
         if (mo.otherDirection) {
             this.resetflipImage(mo);
         }
@@ -141,6 +140,7 @@ class World {
                     if (b.isCollected == false) {
                         b.isCollected = true;
                         this.character.bottles += 1;
+                        //this.createBottleToThrow();
                     }
                     this.charCenter = b.getCenterOfObject(this.character);
                     this.bottleCenter = b.getCenterOfObject(b);
@@ -170,49 +170,17 @@ class World {
        return difference;
     }
 
-    createBottleToThrow() {
-        if (this.throwableBottles.length >= this.character.bottles) return;
 
-        const bx = this.character.x + this.character.width /2;
-        const by = this.character.y + this.character.height /2;
-        const b = new ThrowBottle(bx, by);
-        this.throwableBottles.push(b);
-    }
-
-
-    moveBottle() {
-        this.throwableBottles.forEach((bo) => {
-            setInterval(() => {
-            if (this.character.otherDirection) {
-                bo.x -= bo.speed;
-                bo.y += bo.acceleration;
-            }
-            else {
-                bo.x += bo.speed;
-                bo.y += bo.acceleration;
-            };
-            }, 100)
-        })
-    }
 
     bottleThrown() {
-        console.log('aufgerufen');
-        if (this.throwableBottles.length == 0) return;
+    const bx = this.character.x + this.character.width / 2;
+    const by = this.character.y + this.character.height / 2;
 
-        let bottle = this.throwableBottles.splice(0, 1)[0];
-        this.thrownBottles.push(bottle);
-        bottle.thrown = true;
+    let bottle = new ThrowBottle(bx, by, this.character.otherDirection);
+    this.thrownBottles.push(bottle);
+    bottle.throwB();
     }
 
-    splashed() {
-        this.thrownBottles.forEach((tB) => {
-            if (tB.y >= 680 || bottleColideEnemy(tB)) {
-                tB.splashes = true;
-                splashAnimation();
-                splashdelete();
-            }
-        })
-    }
     
 
     // generateMap() {

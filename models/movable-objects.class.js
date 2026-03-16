@@ -78,8 +78,8 @@ class movableObject extends DrawableObject {
     }
 
     bottleColideEnemy(tb) {
-        world.level.enemies.forEach((e)=> {
-            return tb.x + tb.width > e.x + e.offset.left &&
+        return world.level.enemies.some(e => {
+            tb.x + tb.width > e.x + e.offset.left &&
             tb.y + tb.height > e.y + e.offset.top &&
             tb.x < e.x + e.width - e.offset.right &&
             tb.y < e.y + e.height - e.offset.bottom;

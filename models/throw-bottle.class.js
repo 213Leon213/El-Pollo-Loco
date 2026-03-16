@@ -4,6 +4,7 @@ class ThrowBottle extends movableObject {
     thrown = false;
     splashes = false;
     speed = 40;
+    speedY = 18;
     acceleration = 4.5;
 
     IMG_THROW = [
@@ -21,22 +22,86 @@ class ThrowBottle extends movableObject {
         '../img/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
     ]
 
-    constructor(x, y) {
+    constructor(x, y, otherDirection) {
         super().loadImage('../img/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMG_THROW);
         this.loadImages(this.IMG_SPLASH);
         this.x = x;
         this.y = y;
-        if (!this.splashes) {this.animate(this.IMG_THROW)} else {this.splashAnimation(this.IMG_SPLASH)};
+        this.otherDirection = otherDirection;
+        this.alpha = 1;
+        this.decideAnimation();
     }
 
-    
+    throwB() {
+        this.thrown = true;
+
+        this.throwInterval = setInterval(() => {
+            if (this.splashes) {
+                clearInterval(this.throwInterval);
+                return;
+            }
+
+            if (this.otherDirection) {
+                this.x -= this.speed;
+            } else {
+                this.x += this.speed;
+            }
+
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+
+            if (this.y >= 350) {
+                this.y = 350;
+                this.splashes = true;
+                clearInterval(this.throwInterval);
+            }
+        }, 1000 / 25);
+    }
 
     splashAnimation() {
-        
+        if (this.splashIndex === undefined) {
+        this.splashIndex = 0;
     }
 
+    if (this.splashIndex < this.IMG_SPLASH.length) {
 
+        this.img = this.classImages[this.IMG_SPLASH[this.splashIndex]];
+        this.splashIndex++;
+        if (this.splashIndex >= this.IMG_SPLASH.length) {this.fadeOut()}
+    }
+    
+    }
+
+    throwAnimation(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.classImages[path];
+        this.currentImage++;
+    }
+
+    decideAnimation() {
+        this.state = setInterval(() => {
+            if (!this.splashes) {this.throwAnimation(this.IMG_THROW)}
+            else {
+            this.splashAnimation();
+            };
+        }, 1000 / 25);
+    }
+
+    fadeOut() {
+    this.fadeInterval = setInterval(() => {
+
+        this.alpha -= 0.05;
+
+        if (this.alpha <= 0) {
+            clearInterval(this.fadeInterval);
+            this.alpha = 0;
+            this.remove = true;
+        }
+
+    }, 100);
+}
 
 
 }

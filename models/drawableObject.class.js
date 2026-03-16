@@ -3,7 +3,10 @@ class DrawableObject {
 
 
     draw(ctx) {
+        ctx.globalAlpha = this.alpha ?? 1;
+        ctx.save();
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        ctx.restore();
     }
 
     drawHitbox(ctx) {
