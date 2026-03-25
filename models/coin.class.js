@@ -14,8 +14,8 @@ class Coin extends Objects{
         const targetY = character.y + character.height / 2 + 60;
         const coinCenterX = this.x + this.width / 2;
         const coinCenterY = this.y + this.height / 2;
-        this.x += (targetX - coinCenterX) * 0.2;
-        this.y += (targetY - coinCenterY) * 0.2;
+        this.x += (targetX - coinCenterX) * 0.5;
+        this.y += (targetY - coinCenterY) * 0.5;
         this.width -= 10;
         this.height -= 10;
     }

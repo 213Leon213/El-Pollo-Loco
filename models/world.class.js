@@ -1,6 +1,7 @@
 class World {
 
     character = new Character();
+    endboss = new Endboss(this);
 
     level = level1;
     ctx;
@@ -33,8 +34,10 @@ class World {
             this.level.enemies.forEach((e) => {
                if (this.character.isColliding(e)) {
                 this.character.hp -= e.damage;
+                if (e.damage > 0) {
                 this.character.hurt = true;
                 this.character.animateHurt();
+                }
                 console.log('collision between character and enemy detected', this.character.hp);
                }
             })
@@ -106,8 +109,11 @@ class World {
             const prevBottom = this.character.prevY + this.character.height - this.character.offset.bottom;
             const currentBottom = this.character.y + this.character.height - this.character.offset.bottom;
             const enemyTop = e.y + e.offset.top;
-            if (this.character.isColliding(e) && prevBottom <= enemyTop && currentBottom > enemyTop && !e.dead) {
-            this.chickenIsDead(e);
+            if (this.character.isColliding(e) && prevBottom <= enemyTop && currentBottom > enemyTop) {
+            e.on = false;
+            e.damage = 0;
+            e.stopAnimation();
+            e.chickenDiesAnimation(this);
         }
         })  
         })
@@ -153,15 +159,7 @@ class World {
     }
     
 
-    chickenIsDead(e) {
-        e.dead = true;
-        e.damage = 0;
-        e.img.src = '../img/img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
-        e.draw(this.ctx);
-        setTimeout(() => {
-       this.level.enemies = this.level.enemies.filter(e => !e.dead);
-       }, 500)
-    }
+    
 
     diff(e) {
        const playerBottom =  this.character.y + this.character.height - this.character.offset.bottom;
@@ -176,7 +174,7 @@ class World {
     const bx = this.character.x + this.character.width / 2;
     const by = this.character.y + this.character.height / 2;
 
-    let bottle = new ThrowBottle(bx, by, this.character.otherDirection);
+    let bottle = new ThrowBottle(bx, by, this.character.otherDirection, this);
     this.thrownBottles.push(bottle);
     bottle.throwB();
     }

@@ -26,8 +26,8 @@ class Bottle extends Objects{
         const targetY = character.y + character.height / 2 + 60;
         const bottleCenterX = this.x + this.width / 2;
         const bottleCenterY = this.y + this.height / 2;
-        this.x += (targetX - bottleCenterX) * 0.2;
-        this.y += (targetY - bottleCenterY) * 0.2;
+        this.x += (targetX - bottleCenterX) * 0.4;
+        this.y += (targetY - bottleCenterY) * 0.4;
         this.width -= 10;
         this.height -= 10;
     }

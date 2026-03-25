@@ -48,18 +48,27 @@ class movableObject extends DrawableObject {
 
     moveLeft() {
         setInterval( () => {
+            if (this.on) {
             this.x -= this.speed;
+            }
         }, 1000 / 60)
     }
 
     animate(images) {
-        setInterval(()=>{
+        if (this.animation) return;
+
+        this.animation = setInterval(()=>{
             let i = this.currentImage % images.length;
             let path = images[i];
             this.img = this.classImages[path];
             this.currentImage++;
+            
         }, 1000/10)
-        
+    }
+
+    stopAnimation() {
+        clearInterval(this.animation);
+        this.animation = null;
     }
 
     isColliding(mo) {
@@ -77,14 +86,7 @@ class movableObject extends DrawableObject {
         this.y < mo.y + mo.height;
     }
 
-    bottleColideEnemy(tb) {
-        return world.level.enemies.some(e => {
-            tb.x + tb.width > e.x + e.offset.left &&
-            tb.y + tb.height > e.y + e.offset.top &&
-            tb.x < e.x + e.width - e.offset.right &&
-            tb.y < e.y + e.height - e.offset.bottom;
-        })
-    }
+    
     
 
     
