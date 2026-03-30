@@ -1,7 +1,7 @@
 class World {
 
     character = new Character();
-    endboss = new Endboss(this);
+    //endboss = new Endboss(this);
 
     level = level1;
     ctx;
@@ -25,6 +25,10 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach(e => {e.world = this;
+        if (e instanceof Endboss) {
+            e.chickenIsAlert();
+        }});
     }
 
     checkCollisions() {
