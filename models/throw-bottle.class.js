@@ -51,13 +51,16 @@ class ThrowBottle extends movableObject {
             this.speedY -= this.acceleration;
             let hitEnemy = this.getHitEnemy(this.world.level.enemies);
             if (hitEnemy instanceof Endboss) {
-                this.splashes = true;
                 hitEnemy.endbossGOTHIT(this);
                 clearInterval(this.throwInterval);
             }
-            if (this.y >= 350 && hitEnemy) {
+            if (this.y >= 350 || hitEnemy) {
                 this.y = 350;
                 this.splashes = true;
+                clearInterval(this.throwInterval);
+            }
+            if (hitEnemy instanceof chicken) {
+                hitEnemy.chickenGOTHIT(this, this.world);
                 clearInterval(this.throwInterval);
             }
         }, 1000 / 25);
@@ -119,5 +122,7 @@ bottleColideEnemy(e) {
 getHitEnemy(enemies) {
     return enemies.find(e => this.bottleColideEnemy(e));
 }
+
+    
 
 }

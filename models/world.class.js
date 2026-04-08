@@ -1,6 +1,9 @@
 class World {
 
     character = new Character();
+    healthStatusBar = new Healthbar(this);
+    coinStatusBar = new Coinbar(this);
+    bottleStatusBar = new Bottlebar
     //endboss = new Endboss(this);
 
     level = level1;
@@ -49,7 +52,7 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectToMap(this.level.backgroundObjects);
         this.addObjectToMap(this.level.clouds);
@@ -60,6 +63,9 @@ class World {
         this.addObjectToMap(this.thrownBottles);
         //this.generateMap();
         this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.healthStatusBar);
+        this.addToMap(this.coinStatusBar);
+        this.addToMap(this.bottleStatusBar);
         
 
         let self = this;
@@ -118,6 +124,7 @@ class World {
             e.damage = 0;
             e.stopAnimation();
             e.chickenDiesAnimation(this);
+            
         }
         })  
         })

@@ -41,10 +41,16 @@ class chicken extends movableObject{
             this.deadInterval = null;
             world.level.enemies = world.level.enemies.filter(e => e !== this);
         },2000);
+
+        
     
     }
         
-    
+    chickenGOTHIT(bottle, world) {
+        bottle.splashes = true;
+        this.on = false;
+        this.chickenDiesAnimation(world);
+    }
 
     
     

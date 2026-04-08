@@ -1,6 +1,11 @@
 class DrawableObject {
 
+    img;
+    classImages = {};
 
+    constructor() {
+
+    }
 
     draw(ctx) {
         ctx.globalAlpha = this.alpha ?? 1;
@@ -17,6 +22,14 @@ class DrawableObject {
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.stroke();
         }
+    }
+
+    loadImages(arr) {
+       arr.forEach(path => {
+        let img = new Image();
+        img.src = path;
+        this.classImages[path] = img;
+       });
     }
 
     drawOffsetBox(ctx) {

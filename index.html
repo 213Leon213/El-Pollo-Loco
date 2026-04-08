@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css">
-    <script src="/models/world.class.js"></script>
     <script src="/models/drawableObject.class.js"></script>
+    <script src="/models/world.class.js"></script>
+    <script src="/models/statusbar.class.js"></script>
+    <script src="/models/statusbar-types/healthbar.class.js"></script>
+    <script src="/models/statusbar-types/coinbar.class.js"></script>
+    <script src="/models/statusbar-types/bottlebar.class.js"></script>
     <script src="/models/movable-objects.class.js"></script>
     <script src="/models/cloud.class.js"></script>
     <script src="/models/objects.class.js"></script>
@@ -25,6 +29,9 @@
 
 </head>
 <body onload="init()">
+    <audio id="themeMusic">
+        <source src="/audio/El Jarabe Tapatio-The Mexican Hat Dance - Nollan Smith (192k).mp3">
+    </audio>
     <canvas id="canvas" width="720px" height="480px">
 
     </canvas>

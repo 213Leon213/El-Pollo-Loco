@@ -66,6 +66,7 @@ class Character extends movableObject{
     }
 
 
+
     jump() {
         if (this.dead) {return};
         this.animateJump();

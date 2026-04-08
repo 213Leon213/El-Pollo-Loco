@@ -1,8 +1,6 @@
 class movableObject extends DrawableObject {
     x = 120;
     y = 350;
-    img;
-    classImages = {};
     currentImage = 0;
     width = 100;
     height = 100;
@@ -33,18 +31,14 @@ class movableObject extends DrawableObject {
 
     
 
+    
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
-    loadImages(arr) {
-       arr.forEach(path => {
-        let img = new Image();
-        img.src = path;
-        this.classImages[path] = img;
-       });
-    }
+    
 
     moveLeft() {
         setInterval( () => {
@@ -58,6 +52,9 @@ class movableObject extends DrawableObject {
         if (this.animation) return;
 
         this.animation = setInterval(()=>{
+            if (this.dead) {
+                this.stopAnimation();
+            }
             let i = this.currentImage % images.length;
             let path = images[i];
             this.img = this.classImages[path];

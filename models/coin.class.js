@@ -29,4 +29,6 @@ class Coin extends Objects{
         right: 70,
         left: 70
     }
+
+    
 }
