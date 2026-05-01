@@ -15,7 +15,7 @@ class Coinbar extends Statusbar {
 
 
     coinBarUpdate() {
-        setInterval(()=> {
+    this.updateInterval = setInterval(()=> {
             switch (world.character.coins) {
                 case 1:
                     world.coinStatusBar.setPercentage("Coins", 20);

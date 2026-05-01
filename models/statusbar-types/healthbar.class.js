@@ -14,30 +14,23 @@ class Healthbar extends Statusbar {
     }
 
     healthBarUpdate() {
-        setInterval(()=> {
-            switch (world.character.hp) {
-                case 0:
-                    world.healthStatusBar.setPercentage("Health", 0);
-                    break;
-                case 20:
-                    world.healthStatusBar.setPercentage("Health", 20);
-                    break;
-                case 40:
-                    world.healthStatusBar.setPercentage("Health", 40);
-                    break;
-                case 60:
-                    world.healthStatusBar.setPercentage("Health", 60);
-                    break;
-                case 80:
-                    world.healthStatusBar.setPercentage("Health", 80);
-                    break;
-                case 100:
-                    world.healthStatusBar.setPercentage("Health", 100);
-                    break;
+        this.updateInterval = setInterval(() => {
+            let hp = world.character.hp;
 
-                default: 
-                    break;
+            if (hp <= 0) {
+                this.setPercentage("Health", 0);
+            } else if (hp <= 20) {
+                this.setPercentage("Health", 20);
+            } else if (hp <= 40) {
+                this.setPercentage("Health", 40);
+            } else if (hp <= 60) {
+                this.setPercentage("Health", 60);
+            } else if (hp <= 80) {
+                this.setPercentage("Health", 80);
+            } else {
+                this.setPercentage("Health", 100);
             }
+
         }, 100);
-    }
+    }   
 }

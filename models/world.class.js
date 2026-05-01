@@ -3,8 +3,8 @@ class World {
     character = new Character();
     healthStatusBar = new Healthbar(this);
     coinStatusBar = new Coinbar(this);
-    bottleStatusBar = new Bottlebar
-    //endboss = new Endboss(this);
+    bottleStatusBar = new Bottlebar()
+    endbossHealthBar = new EndbossHealthbar(this);
 
     level = level1;
     ctx;
@@ -13,6 +13,16 @@ class World {
     camera_x = 0;
     currentImage = 0;
     thrownBottles = [];
+    win = false;
+    lose = false;
+    showEndbossHealthbar = false;
+
+    worldInterval = [
+        this.collisonInterval,
+        this.jumpOnEInterval,
+        this.collectCInterval,
+        this.collectBInterval
+    ]
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -37,7 +47,7 @@ class World {
     checkCollisions() {
         if (this.character.hurt) return;
         
-        setInterval(() => {
+    this.collisonInterval = setInterval(() => {
             this.level.enemies.forEach((e) => {
                if (this.character.isColliding(e)) {
                 this.character.hp -= e.damage;
@@ -45,7 +55,6 @@ class World {
                 this.character.hurt = true;
                 this.character.animateHurt();
                 }
-                console.log('collision between character and enemy detected', this.character.hp);
                }
             })
         },500)
@@ -61,11 +70,13 @@ class World {
         this.addObjectToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addObjectToMap(this.thrownBottles);
-        //this.generateMap();
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.healthStatusBar);
         this.addToMap(this.coinStatusBar);
         this.addToMap(this.bottleStatusBar);
+        if (this.showEndbossHealthbar) {
+        this.addToMap(this.endbossHealthBar);
+        }
         
 
         let self = this;
@@ -88,10 +99,9 @@ class World {
         }
 
         if (!mo.img || !mo.img.complete) {
-        if (mo.otherDirection) this.ctx.restore(); // falls flipImage save/translate macht
+        if (mo.otherDirection) this.ctx.restore();
         return;
         }
-        //console.log("drawing object:", mo);
         mo.draw(this.ctx);
         mo.drawHitbox(this.ctx);
         mo.drawOffsetBox(this.ctx);
@@ -114,7 +124,7 @@ class World {
     }
 
     jumpOnEnemy() {
-          setInterval(()=>{
+    this.jumpOnEInterval = setInterval(()=>{
             this.level.enemies.forEach((e) => {
             const prevBottom = this.character.prevY + this.character.height - this.character.offset.bottom;
             const currentBottom = this.character.y + this.character.height - this.character.offset.bottom;
@@ -131,7 +141,7 @@ class World {
     }
 
     collectCoins() {
-        setInterval(() => {
+    this.collectCInterval = setInterval(() => {
         this.level.coins.forEach( c => {
                 if (this.character.collidesWithItems(c)) {
                     c.animateCoinCollect(this.character);
@@ -150,14 +160,13 @@ class World {
     }
 
     collectBottles() {
-        setInterval(() => {
+    this.collectBInterval = setInterval(() => {
         this.level.bottles.forEach( b => {
                 if (this.character.collidesWithItems(b)) {
                     b.animateBottleCollect(this.character);
                     if (b.isCollected == false) {
                         b.isCollected = true;
                         this.character.bottles += 1;
-                        //this.createBottleToThrow();
                     }
                     this.charCenter = b.getCenterOfObject(this.character);
                     this.bottleCenter = b.getCenterOfObject(b);
@@ -190,53 +199,97 @@ class World {
     bottle.throwB();
     }
 
+    youWon() {
+        if (this.lose) return;
+
+        mobile.classList.add('hidden');
+        win.classList.remove('hidden');
+        this.win = true;
+        music.pause();
+        winningSound.play()
+    }
+
+    youLose() {
+        if (this.win) return;
+
+        mobile.classList.add('hidden');
+        this.deleteIntervals();
+        gameOver.classList.remove('hidden');
+        this.lose = true;
+        music.pause();
+        losingSound.play()
+    }
+
+    destroyWorld() {
+        this.deleteIntervals();
+    }
+
+    deleteIntervals() {
+        this.deleteWorldIntervals();
+        this.deleteCharacterIntervals();
+        this.deleteEnemyIntervals();
+        this.deleteStatusbarIntervals();
+        this.deleteMovableObjectsIntervals();
+    }
+
+    deleteStatusbarIntervals() {
+        clearInterval(this.healthStatusBar.updateInterval);
+        this.healthStatusBar.updateInterval = null;
+        clearInterval(this.coinStatusBar.updateInterval);
+        this.coinStatusBar.updateInterval = null;
+        clearInterval(this.bottleStatusBar.updateInterval);
+        this.bottleStatusBar.updateInterval = null;
+        clearInterval(this.endbossHealthBar.updateInterval);
+        this.endbossHealthBar.updateInterval = null;
+    }
+
+    deleteEnemyIntervals() {
+        this.level.enemies.forEach(e => {
+        if (e instanceof Endboss) {
+            this.deleteEndbossIntervals(e);
+            e.stopAnimation();
+            e.stopMoveLeft();
+        }
+        if (e instanceof Chicken || e instanceof Smallchicken) {
+            e.stopAnimation();
+            e.stopMoveLeft();
+            clearInterval(e.deadInterval);
+            e.deadInterval = null;
+        }
+    });
+    }
+
+    deleteEndbossIntervals(e) {
+        e.intervals.forEach((i, index) => {
+            clearInterval(i);
+            this.worldInterval[index] = null;
+        })
+    }
+
+    deleteWorldIntervals() {
+        this.worldInterval.forEach((i, index)=> {
+            clearInterval(i);
+            this.worldInterval[index] = null;
+        })
+    }
+    
+    deleteCharacterIntervals() {
+        this.character.intervals.forEach((i, index)=>{
+            clearInterval(i);
+            this.character.intervals[index] = null;
+        })
+    }
+
+    deleteMovableObjectsIntervals() {
+        this.character.mOIntervals.forEach((i, index) => {
+            clearInterval(i);
+            this.character.mOIntervals[index] = null;
+        })
+    }
+
+
     
 
-    // generateMap() {
-    //   const TILE = 720;
-    //   const PRELOAD = 300; // wie früh nachladen
-
-    //   // rechte sichtbare Kante in World-Koordinaten
-    //   const viewRight = -this.camera_x + this.canvas.width;
-
-    //   // rechteste vorhandene Hintergrund-X Position
-    //   const maxX = Math.max(...this.backgroundObjects.map(o => o.x));
-
-    //   // Guard-Variable initialisieren
-    //   if (this.nextRightX === undefined) this.nextRightX = maxX + TILE;
-
-    //   // Wenn wir nahe am Ende sind: rechts 2 Tiles anhängen
-    //   if (viewRight >= maxX + TILE - PRELOAD) {
-    //     const x = this.nextRightX;
-
-    //     const addedBG = [
-    //       new BackgroundObject('img/img/5_background/layers/air.png', x, 0),
-    //       new BackgroundObject('img/img/5_background/layers/3_third_layer/1.png', x, 0),
-    //       new BackgroundObject('img/img/5_background/layers/2_second_layer/1.png', x, 0),
-    //       new BackgroundObject('img/img/5_background/layers/1_first_layer/1.png', x, 0),
-
-    //       new BackgroundObject('img/img/5_background/layers/air.png', x + TILE, 0),
-    //       new BackgroundObject('img/img/5_background/layers/3_third_layer/2.png', x + TILE, 0),
-    //       new BackgroundObject('img/img/5_background/layers/2_second_layer/2.png', x + TILE, 0),
-    //       new BackgroundObject('img/img/5_background/layers/1_first_layer/2.png', x + TILE, 0),
-    //     ];
-
-    //     // WICHTIG: wirklich in backgroundObjects aufnehmen
-    //     this.backgroundObjects.push(...addedBG);
-
-    //     // Pointer weiterschieben (weil du 2 Tiles addest)
-    //     this.nextRightX += TILE * 2;
-    //   }
-    // }
-
-    // goNotOutOfMap() {
-    //     const minWorldX = 0;
-    //     const charWorldX = character.x - camera_x;
-    //     if (charWorldX <= 0) {
-    //         this.character.x = 0;
-    //     }
-
-    // }
-
+    
 
 }

@@ -43,7 +43,7 @@ class DrawableObject {
     }
 
     checkObject() {
-        return this instanceof Character|| this instanceof chicken || this instanceof Coin || this instanceof Bottle || this instanceof Endboss;
+        return this instanceof Character|| this instanceof Chicken || this instanceof Coin || this instanceof Bottle || this instanceof Endboss;
     }
 
     offset = {

@@ -27,6 +27,14 @@ class Statusbar extends DrawableObject {
         "../img/img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png",
         "../img/img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png",
         "../img/img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png",
+        ],
+        Endboss: [
+        "../img/img/7_statusbars/2_statusbar_endboss/green/green0.png",
+        "../img/img/7_statusbars/2_statusbar_endboss/green/green20.png",
+        "../img/img/7_statusbars/2_statusbar_endboss/green/green40.png",
+        "../img/img/7_statusbars/2_statusbar_endboss/green/green60.png",
+        "../img/img/7_statusbars/2_statusbar_endboss/green/green80.png",
+        "../img/img/7_statusbars/2_statusbar_endboss/green/green100.png"
         ]
     }
 
@@ -37,9 +45,10 @@ class Statusbar extends DrawableObject {
         this.loadImages(this.imageGroup.Health);
         this.loadImages(this.imageGroup.Coins);
         this.loadImages(this.imageGroup.Bottles);
+        this.loadImages(this.imageGroup.Endboss);
         this.x = 30;
         this.y = 100;
-        this.width = 100;
+        this.width = 200;
         this.height = 60;
     }
 
@@ -50,6 +59,8 @@ class Statusbar extends DrawableObject {
         this.img = this.classImages[result];
 
     }
+
+
     
     
     

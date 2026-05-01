@@ -23,6 +23,12 @@ class ThrowBottle extends movableObject {
         '../img/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
     ]
 
+    intervals = [
+        this.throwInterval,
+        this.state,
+        this.fadeInterval
+    ]
+
     constructor(x, y, otherDirection, world) {
         super().loadImage('../img/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMG_THROW);
@@ -59,7 +65,7 @@ class ThrowBottle extends movableObject {
                 this.splashes = true;
                 clearInterval(this.throwInterval);
             }
-            if (hitEnemy instanceof chicken) {
+            if (hitEnemy instanceof Chicken) {
                 hitEnemy.chickenGOTHIT(this, this.world);
                 clearInterval(this.throwInterval);
             }

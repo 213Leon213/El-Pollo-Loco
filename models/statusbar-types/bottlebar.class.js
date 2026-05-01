@@ -14,7 +14,7 @@ class Bottlebar extends Statusbar {
     }
 
     bottleBarUpdate() {
-        setInterval(()=> {
+    this.updateInterval = setInterval(()=> {
             switch (world.character.bottles) {
                 case 0:
                     world.bottleStatusBar.setPercentage("Bottles", 0);

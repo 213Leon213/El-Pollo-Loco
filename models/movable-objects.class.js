@@ -9,6 +9,12 @@ class movableObject extends DrawableObject {
     speedY = 0;
     acceleration = 3;
 
+    mOIntervals = [
+        this.gravityInterval,
+        this.leftMovementInterval,
+        this.animation
+    ]
+
     constructor() {
     super();
     }
@@ -16,7 +22,7 @@ class movableObject extends DrawableObject {
     applyGravity() {
         if (this.dead) return;
         
-        setInterval(()=> {
+    this.gravityInterval = setInterval(()=> {
             if (this.speedY > 0 || this.isInAir()) {
             this.prevY = this.y;
             this.y -= this.speedY;
@@ -41,24 +47,30 @@ class movableObject extends DrawableObject {
     
 
     moveLeft() {
-        setInterval( () => {
+    this.leftMovementInterval = setInterval( () => {
             if (this.on) {
             this.x -= this.speed;
             }
         }, 1000 / 60)
     }
 
+    stopMoveLeft() {
+        clearInterval(this.leftMovementInterval);
+        this.leftMovementInterval = null;
+    }
+
+
+
     animate(images) {
         if (this.animation) return;
-
+        
         this.animation = setInterval(()=>{
-            if (this.dead) {
-                this.stopAnimation();
-            }
+            if (this.dead) {this.stopAnimation()}
             let i = this.currentImage % images.length;
             let path = images[i];
             this.img = this.classImages[path];
             this.currentImage++;
+            
             
         }, 1000/10)
     }
