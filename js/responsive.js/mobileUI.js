@@ -45,3 +45,23 @@ jumpBtn.addEventListener("touchend", () => keyboard.SPACE = false);
 
 throwBtn.addEventListener("touchstart", () => keyboard.E = true);
 throwBtn.addEventListener("touchend", () => keyboard.E = false);
+
+
+document.getElementById("mobile-controls").addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+});
+
+function makeMobileBtnResp() {
+    document.getElementById('leftBtn').classList.toggle('fullscreen-mobile');
+    document.getElementById('rightBtn').classList.toggle('fullscreen-mobile');
+    document.getElementById('jumpBtn').classList.toggle('fullscreen-mobile');
+    document.getElementById('throwBtn').classList.toggle('fullscreen-mobile');
+    document.getElementById('playButton').classList.toggle('fullscreen-mobile');
+    document.getElementById('controlsButton').classList.toggle('fullscreen-mobile');
+    document.getElementById('gameOverRetryButton').classList.toggle('fullscreen-mobile');
+    document.getElementById('gameOverBackbutton').classList.toggle('fullscreen-mobile');
+    document.getElementById('gameWinRetryButton').classList.toggle('fullscreen-mobile');
+    document.getElementById('gameWinBackbutton').classList.toggle('fullscreen-mobile');
+    document.getElementById('controlsPlayButton').classList.toggle('fullscreen-mobile');
+    document.getElementById('controlsBackButton').classList.toggle('fullscreen-mobile');
+}

@@ -47,7 +47,7 @@ class World {
     checkCollisions() {
         if (this.character.hurt) return;
         
-    this.collisonInterval = setInterval(() => {
+        this.collisonInterval = setInterval(() => {
             this.level.enemies.forEach((e) => {
                if (this.character.isColliding(e)) {
                 this.character.hp -= e.damage;

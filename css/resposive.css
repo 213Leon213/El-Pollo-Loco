@@ -8,7 +8,7 @@
         position: fixed;
         inset: 0;
         background: #111;
-        z-index: 9999;
+        z-index: 9999999;
         justify-content: center;
         align-items: center;
     }
@@ -47,6 +47,62 @@
     }
 }
 
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+
+    #game-container {
+        width: 100%;
+    }
+
+    #start-screen {
+        width: 100%;
+    }
+
+    
+    
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
+    #game-container {
+        height: 100%;
+    }
+
+    #start-screen {
+        height: 100%;
+    }
+
+    #start-screen-img {
+        height: 100%;
+        width: 100%;
+    }
+
+    #controls-img {
+        height: 100vh;
+    }
+
+    #control-explanation {
+        height: 100vh;
+    }
+}
+
+#controlsPlayButton {
+    bottom: 4%;
+}
+
+#controlsBackButton {
+    bottom: 4%;
+}
+
+
+
+
+
 @keyframes rotatePhone {
     0%   { transform: rotate(0deg); }
     40%  { transform: rotate(90deg); }
@@ -54,30 +110,3 @@
     100% { transform: rotate(0deg); }
 }
 
-#throwBtn {
-    position: fixed;
-    top: 72%;
-    left: 57%;
-    transform: translate(-50%, -50%);
-}
-
-#rightBtn {
-    position: fixed;
-    top: 72%;
-    left: 70%;
-    transform: translate(-50%, -50%);
-}
-
-#leftBtn {
-    position: fixed;
-    top: 72%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-}
-
-#jumpBtn {
-    position: fixed;
-    top: 72%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-}

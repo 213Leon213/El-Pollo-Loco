@@ -9,16 +9,28 @@ let mute;
 let muteImg;
 let controls;
 let mobile;
+let menuImg;
+let gameOverImg;
+let gameWonImg;
+let controlsImg;
+let topContainer;
+let gameContainer;
 
 
 function init() {
     canvas = document.getElementById('canvas');
     menu = document.getElementById('start-screen');
+    menuImg = document.getElementById('start-screen-img');
+    gameOverImg = document.getElementById('game-over-img');
+    gameWonImg = document.getElementById('game-won-img');
+    controlsImg = document.getElementById('controls-img');
     controls = document.getElementById('control-explanation');
     win = document.getElementById('game-won');
     gameOver = document.getElementById('game-over-screen');
     mute = document.getElementById('muteGame');
     mobile = document.getElementById('mobile-controls');
+    topContainer = document.getElementById('top-icon-container');
+    gameContainer = document.getElementById('game-container');
     applyMuteState();
     
 }
@@ -131,8 +143,21 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-//console.log('this here:', mute);
-//mute.addEventListener("click", () => {
-//    toggleMute();
-//    mute.blur();
-//});
+
+function toggleFullscreen() {
+    canvas.classList.toggle("fullscreen-mode");
+    menu.classList.toggle("fullscreen-mode");
+    gameOver.classList.toggle("fullscreen-mode");
+    win.classList.toggle("fullscreen-mode");
+    controls.classList.toggle("fullscreen-mode");
+    gameContainer.classList.toggle("fullscreen-mode");
+    giveImgFullscreen();
+    makeMobileBtnResp();
+}
+
+function giveImgFullscreen() {
+    menuImg.classList.toggle("fullscreen-mode");
+    gameOverImg.classList.toggle("fullscreen-mode");
+    gameWonImg.classList.toggle("fullscreen-mode");
+    controlsImg.classList.toggle("fullscreen-mode");
+}

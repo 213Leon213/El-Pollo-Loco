@@ -17,9 +17,21 @@ canvas {
 button {
     width: 128px;
     height: 48px;
-    position: absolute;
     z-index: 20;
-    cursor: pointer;
+}
+
+.buttons {
+    font-family: "Bangers";
+    font-size: 24px;
+    position: absolute;
+}
+
+.buttons:focus {
+    outline: none;
+}
+
+.buttons:active {
+    outline: none;
 }
 
 .play-button {
@@ -27,6 +39,7 @@ button {
     bottom: 5%;
     font-family: "Bangers";
     font-size: 24px;
+    position: absolute;
 }
 
 .controls-button {
@@ -34,15 +47,17 @@ button {
     bottom: 5%;
     font-family: "Bangers";
     font-size: 24px;
+    position: absolute;
 }
+
 
 .mute-button {
     width: 32px;
     height: 32px;
     background-color: transparent;
-    position: absolute;
-    bottom: 85%;
-    left: 50%;
+    /* position: absolute; */
+    /* bottom: 90%; */
+    /* left: 50%; */
     border-color: transparent;
 }
 
@@ -50,6 +65,30 @@ button {
     object-fit: cover;
     width: 32px;
     height: 32px;
+}
+
+#fullscreen-btn {
+    /* position: absolute; */
+    /* bottom: 80%; */
+    /* right: 46%; */
+    width: 45px;
+    height: 45px;
+    background-color: transparent;
+    border: unset;
+    cursor: pointer;
+}
+
+#fullscreen-icon {
+    object-fit: cover;
+}
+
+.top-icon-buttons-container {
+    position: absolute;
+    bottom: 90%;
+    transform: translateX(-50%);
+    right: 44%;
+    gap: 10px;
+    z-index: 999999;
 }
 
 #start-screen, 
@@ -61,7 +100,8 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 720px;
-    height: 480px;
+    height: 484px;
+    z-index: 30;
 }
 
 #start-screen > img {
@@ -71,6 +111,14 @@ button {
     height: 100%;
     z-index: 0;
     pointer-events: none;
+}
+
+#start-screen-img,
+#game-over-img,
+#game-won-img,
+#controls-img {
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -98,4 +146,74 @@ button {
     bottom: 5%;
     font-family: "Bangers";
     font-size: 24px;
+}
+
+.fullscreen-mode {
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    transform: none !important;
+}
+
+#canvas.fullscreen-mode {
+    object-fit: contain;
+    background: black;
+}
+
+#start-screen.fullscreen-mode,
+#game-over-screen.fullscreen-mode,
+#game-won.fullscreen-mode,
+#control-explanation-fullscreen-mode {
+    z-index: 9999;
+    position: fixed !important;
+}
+
+#control-explanation-fullscreen-mode {
+    z-index: 9999;
+
+    
+}
+
+/* linker Button */
+#leftBtn {
+    left: 5%;
+}
+
+/* rechter Button */
+#rightBtn {
+    left: 16%;
+}
+
+#throwBtn {
+    right: 4%;
+}
+
+#jumpBtn {
+    right: 16%;
+}
+
+#leftBtn,
+#rightBtn,
+#throwBtn,
+#jumpBtn {
+    position: absolute;
+    bottom: 4%;
+
+    width: clamp(50px, 7vw, 90px);
+    height: clamp(50px, 7vw, 90px);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#game-container {
+    position: fixed;
+    width: 720px;
+    height: 480px;
+}
+
+#mobile-controls {
+    position: absolute;
+    inset: 0;
 }
