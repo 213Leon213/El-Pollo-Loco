@@ -12,6 +12,9 @@ body {
 
 canvas {
     background-color: black;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 button {
@@ -199,21 +202,25 @@ button {
     position: absolute;
     bottom: 4%;
 
-    width: clamp(50px, 7vw, 90px);
-    height: clamp(50px, 7vw, 90px);
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: transparent;
+    width: clamp(40px, 6vw, 70px);
+    height: clamp(40px, 6vw, 70px);
 }
 
 #game-container {
     position: fixed;
-    width: 720px;
     height: 480px;
+    width: min(720px, 100vw);
+    aspect-ratio: 720 / 480;
 }
 
 #mobile-controls {
     position: absolute;
     inset: 0;
+}
+
+.mobile-buttons {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
 }

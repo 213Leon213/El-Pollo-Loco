@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="/css/button.css">
     <link rel="stylesheet" href="/css/resposive.css">
+    <link rel="icon" type="image/png" href="/img/img/6_salsa_bottle/salsa_bottle.png">
     <script src="/models/drawableObject.class.js"></script>
     <script src="/models/world.class.js"></script>
     <script src="/models/statusbar.class.js"></script>
@@ -31,7 +32,6 @@
     <script src="/script.js"></script>
     <script src="/js/sounds.js"></script>
     <script src="/js/mute-script.js"></script>
-    <script src="/js/buttons.js"></script>
     
 
 </head>
@@ -51,7 +51,10 @@
         <img src="/img/img/icons/fullscreen_icon_transparent.png" alt="fullscreen button" id="fullscreen-icon" style="width: 32px; height: 32px;">
     </button>
     </div>
-    <div id="start-screen" class="">
+    
+    <div id="game-container">
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="start-screen" class="">
         <button class="play-button buttons" id="playButton" onclick="startGame()">Play</button>
         <button class="controls-button buttons" id="controlsButton" onclick="checkControls()">Controls</button>
         <img src="/img/img/9_intro_outro_screens/start/startscreen_1.png" id="start-screen-img">
@@ -71,13 +74,11 @@
         <button class="buttons retry-button" id="controlsPlayButton" onclick="startGame()">Play</button>
         <button class="buttons menu-button" id="controlsBackButton" onclick="backToMenu()">Menu</button>
     </div>
-    <div id="game-container">
-        <canvas id="canvas" width="720px" height="480px"></canvas>
         <div id="mobile-controls" class="hidden">
             <button id="leftBtn" class="buttons mobile-buttons">&lt;</button>
-            <button id="jumpBtn" class="buttons">JUMP</button>
+            <button id="jumpBtn" class="buttons"><img id="jump-img" src="/img/img/2_character_pepe/3_jump/J-34.png" alt="jump"></button>
             <button id="rightBtn" class="buttons mobile-buttons">&gt;</button>
-            <button id="throwBtn" class="buttons mobile-buttons">🍼</button>
+            <button id="throwBtn" class="buttons mobile-buttons"><img id="throw-img" src="/img/img/6_salsa_bottle/salsa_bottle.png" alt="salsa_bottle"></button>
         </div>
     </div>
     

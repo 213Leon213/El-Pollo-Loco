@@ -1,8 +1,13 @@
+/**
+ * Represents the player health bar.
+ */
 class Healthbar extends Statusbar {
 
-    
-
-
+    /**
+     * Creates a new health bar.
+     * 
+     * @param {World} world - The current game world.
+     */
     constructor(world) {
         super();
         this.img = img;
@@ -13,10 +18,12 @@ class Healthbar extends Statusbar {
         this.healthBarUpdate();
     }
 
+    /**
+     * Continuously updates the player health bar.
+     */
     healthBarUpdate() {
         this.updateInterval = setInterval(() => {
             let hp = world.character.hp;
-
             if (hp <= 0) {
                 this.setPercentage("Health", 0);
             } else if (hp <= 20) {
@@ -30,7 +37,6 @@ class Healthbar extends Statusbar {
             } else {
                 this.setPercentage("Health", 100);
             }
-
         }, 100);
     }   
 }

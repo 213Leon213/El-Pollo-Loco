@@ -1,43 +1,38 @@
+/**
+ * Represents the bottle status bar.
+ * Updates the current bottle percentage.
+ */
 class Bottlebar extends Statusbar {
 
-    
-
-
+    /**
+     * Creates a new bottle status bar.
+     * 
+     * @param {World} world - The current game world.
+     */
     constructor(world) {
         super();
+
         this.img = img;
         this.x = 10;
         this.y = 130;
+
         this.setPercentage("Bottles", 0);
+
         world = world;
+
         this.bottleBarUpdate();
     }
 
+    /**
+     * Continuously updates the bottle status bar.
+     */
     bottleBarUpdate() {
-    this.updateInterval = setInterval(()=> {
-            switch (world.character.bottles) {
-                case 0:
-                    world.bottleStatusBar.setPercentage("Bottles", 0);
-                    break;
-                case 1:
-                    world.bottleStatusBar.setPercentage("Bottles", 20);
-                    break;
-                case 2:
-                    world.bottleStatusBar.setPercentage("Bottles", 40);
-                    break;
-                case 3:
-                    world.bottleStatusBar.setPercentage("Bottles", 60);
-                    break;
-                case 4:
-                    world.bottleStatusBar.setPercentage("Bottles", 80);
-                    break;
-                case 5:
-                    world.bottleStatusBar.setPercentage("Bottles", 100);
-                    break;
+        this.updateInterval = setInterval(() => {
+            let percentage = world.character.bottles * 20;
 
-                default: 
-                    break;
-            }
+            world.bottleStatusBar
+                .setPercentage("Bottles", percentage);
+
         }, 100);
     }
 }

@@ -1,4 +1,7 @@
-class Chicken extends movableObject{
+/**
+ * Represents a normal chicken enemy.
+ */
+class Chicken extends movableObject {
 
     height = 100;
     width = 90;
@@ -22,6 +25,9 @@ class Chicken extends movableObject{
         left: 5
     }
 
+    /**
+     * Creates a new normal chicken enemy.
+     */
     constructor() {
         super().loadImage('../img/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMG_WALKING);
@@ -32,6 +38,12 @@ class Chicken extends movableObject{
         this.moveLeft(this);
     }
 
+    /**
+     * Plays the death animation and removes
+     * the chicken from the level.
+     * 
+     * @param {World} world - The current game world.
+     */
     chickenDiesAnimation(world) {
        chickenDiesSound.play();
        this.deadInterval = setInterval(() => {
@@ -42,17 +54,18 @@ class Chicken extends movableObject{
             this.deadInterval = null;
             world.level.enemies = world.level.enemies.filter(e => e !== this);
         },2000);
-
-        
-    
     }
         
+    /**
+     * Handles the chicken getting hit by a bottle.
+     * 
+     * @param {ThrowBottle} bottle - The bottle that hit the chicken.
+     * @param {World} world - The current game world.
+     */
     chickenGOTHIT(bottle, world) {
         bottle.splashes = true;
         this.on = false;
         this.chickenDiesAnimation(world);
     }
 
-    
-    
 }

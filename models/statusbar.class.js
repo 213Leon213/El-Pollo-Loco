@@ -1,7 +1,9 @@
+/**
+ * Represents a status bar in the game.
+ */
 class Statusbar extends DrawableObject {
 
     percentage = 0;
-    
 
     imageGroup = {
         Health: [
@@ -38,8 +40,9 @@ class Statusbar extends DrawableObject {
         ]
     }
 
-    
-
+    /**
+     * Creates a new status bar and loads all status bar images.
+     */
     constructor() {
         super();
         this.loadImages(this.imageGroup.Health);
@@ -52,16 +55,16 @@ class Statusbar extends DrawableObject {
         this.height = 60;
     }
 
-
+    /**
+     * Sets the displayed percentage image for a status bar.
+     * 
+     * @param {string} barType - The type of status bar.
+     * @param {number} percentage - The percentage to display.
+     */
     setPercentage(barType, percentage) {
         let groupName = this.imageGroup[barType];
         let result = groupName.find(path => path.includes(percentage + ".png"));
         this.img = this.classImages[result];
-
     }
 
-
-    
-    
-    
 }

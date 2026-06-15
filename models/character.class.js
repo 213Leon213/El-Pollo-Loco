@@ -88,6 +88,12 @@ class Character extends movableObject{
     coins = 0;
     ePressed;
         
+    /**
+     * Creates a new character instance.
+     * Loads the default character image, initializes all animation images,
+     * sets the initial position and size, applies gravity,
+     * starts movement handling and checks for death state.
+     */
     constructor() {
         super().loadImage('../img/img/2_character_pepe/2_walk/W-21.png')
         this.initImageLoad();
@@ -100,6 +106,12 @@ class Character extends movableObject{
         
     }
 
+    /**
+     * Starts checking whether the character should enter sleep mode.
+     * If the character does not move for a certain time,
+     * the sleep timeout is started. If movement is detected,
+     * the character wakes up.
+     */
     engageSleep() {
         if (this.sleepCheckInterval || this.dead || this.world.win) return;
 
@@ -112,6 +124,11 @@ class Character extends movableObject{
         }, 100);
     }
 
+    /**
+     * Wakes the character up from sleep mode.
+     * Clears sleep timers and intervals, stops the current animation,
+     * resets the sleeping state and restores the default walking image.
+     */
     wakeUp() {
      clearTimeout(this.sleepTimeout);
      this.sleepTimeout = null;
@@ -123,6 +140,11 @@ class Character extends movableObject{
      this.img = this.classImages['../img/img/2_character_pepe/2_walk/W-21.png'];
     }
 
+    /**
+     * Starts a timeout before the character enters sleep mode.
+     * The sleep animation only starts if the character still has
+     * no movement after the timeout has finished.
+     */
     tryStartSleepTimeout() {
     if (this.sleepTimeout || this.sleepIntervall || this.isSleeping || this.world.win) return;
 
@@ -135,6 +157,11 @@ class Character extends movableObject{
         }, 15000);
     }
 
+    /**
+     * Starts the character's sleep animation.
+     * Plays the short idle sleep animation first and then switches
+     * to the long sleep animation with snooze sound.
+     */
     startSleepAnimation() {
     if (this.dead || this.world.win) return;
 
@@ -154,6 +181,10 @@ class Character extends movableObject{
         }, 100);
     }
 
+    /**
+     * Plays the snooze sound repeatedly while the character is sleeping.
+     * Stops the sound interval when the character is no longer sleeping.
+     */
     sleepSound() {
     if (this.snoozeSoundIntervall) return;
 
@@ -166,12 +197,22 @@ class Character extends movableObject{
         }, 100);     
     }
 
+    /**
+     * Wakes the character up if a sleep timeout,
+     * sleep animation or sleeping state is currently active.
+     */
     tryWakeUp() {
         if (this.sleepTimeout || this.sleepIntervall || this.isSleeping) {
             this.wakeUp();
         }
     }
 
+    /**
+     * Checks whether the character is currently inactive.
+     *
+     * @returns {boolean} True if no movement key is pressed,
+     * the character is not in the air and the character is not dead.
+     */
     noMovement() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.D
         || this.world.keyboard.LEFT || this.world.keyboard.A
@@ -183,6 +224,11 @@ class Character extends movableObject{
         } 
     }
 
+    /**
+     * Loads and caches all character animation images.
+     * This includes walking, jumping, falling, hurt,
+     * death, idle and long idle animations.
+     */
     initImageLoad() {
         this.loadImages(this.IMG_WALKING);
         this.loadImages(this.IMG_JUMPING);
@@ -193,13 +239,22 @@ class Character extends movableObject{
         this.loadImages(this.IMG_LONGSLEEP);
     }
 
+    /**
+     * Starts the jump action if the character is not dead.
+     * Plays the jump sound and triggers the jump animation.
+     */
     jump() {
-        if (this.dead) {return};
+    if (this.dead) {return};
     
         characterJumpSound.play();
         this.animateJump();
     }
 
+    /**
+     * Updates the walking animation while moving right.
+     * Does not play if the character is jumping,
+     * falling or currently hurt.
+     */
     animateRight() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.D) {
             if (this.jumpInterval || this.fallInterval || this.hurt) return;
@@ -210,6 +265,11 @@ class Character extends movableObject{
         } 
     }
 
+    /**
+     * Updates the walking animation while moving left.
+     * Does not play if the character is jumping,
+     * falling or currently hurt.
+     */
     animateLeft() {
         if (this.world.keyboard.LEFT || this.world.keyboard.A) {
             if (this.jumpInterval || this.fallInterval || this.hurt) return;
@@ -220,6 +280,11 @@ class Character extends movableObject{
         } 
     }
 
+    /**
+     * Plays the jump animation frame by frame.
+     * Applies upward velocity during the animation
+     * and starts the falling animation afterwards.
+     */
     animateJump() {
         if (this.jumpInterval || this.fallInterval) return;
         let index = 0;
@@ -235,21 +300,29 @@ class Character extends movableObject{
         }, 10);
     }
 
+    /**
+     * Plays the falling animation while the character
+     * is descending after a jump.
+     */
     animateFall() {
         let index = 0;
         this.fallInterval = setInterval(() => {
         if (this.speedY <= 0) {
-        this.img = this.classImages[this.IMG_FALLING[index]];
-        index++
-        if (index >= this.IMG_FALLING.length) {
-            clearInterval(this.fallInterval);
-            this.fallInterval = null;
+            this.img = this.classImages[this.IMG_FALLING[index]];
+            index++
+            if (index >= this.IMG_FALLING.length) {
+                clearInterval(this.fallInterval);
+                this.fallInterval = null;
+            }
         }
-        }
-        }, 100)
-            
+        }, 100)     
     }
 
+    /**
+     * Plays the hurt animation when the character
+     * takes damage. Resets the hurt state when
+     * the animation has finished.
+     */
     animateHurt() {
         if (this.hurtInterval || this.dead) return;
 
@@ -266,6 +339,11 @@ class Character extends movableObject{
         }, 100)
     }
 
+    /**
+     * Plays the death animation.
+     * The character moves downward while
+     * the death frames are displayed.
+     */
     animateDeath() {
         if (this.deathInterval) return;
 
@@ -281,8 +359,14 @@ class Character extends movableObject{
         }, 100)
     }
 
+    /**
+     * Starts the main movement loop.
+     * Handles movement input, jumping,
+     * sleep behavior and bottle throwing.
+     * Runs at approximately 30 FPS.
+     */
     movement() {
-    this.movementInterval = setInterval(() => {
+        this.movementInterval = setInterval(() => {
             if (this.checkRight()) {
                 this.rightMovement();
             }
@@ -297,6 +381,12 @@ class Character extends movableObject{
         }, 1000 / 30)  
     }
 
+    /**
+     * Moves the character to the right.
+     * Sets the facing direction, starts the walking animation,
+     * moves the character and plays the walking sound
+     * while the character is on the ground.
+     */
     rightMovement() {
         this.otherDirection = false;
         this.animateRight();
@@ -307,6 +397,12 @@ class Character extends movableObject{
         }
     }
 
+    /**
+     * Moves the character to the left.
+     * Sets the facing direction, starts the walking animation,
+     * moves the character and plays the walking sound
+     * while the character is on the ground.
+     */
     leftMovement() {
         this.otherDirection = true;
         this.animateLeft();
@@ -317,6 +413,11 @@ class Character extends movableObject{
         }
     }
 
+    /**
+     * Checks whether the character is allowed to move right.
+     *
+     * @returns {boolean} True if moving right is allowed.
+     */
     checkRight() {
         if ((this.world.keyboard.RIGHT || this.world.keyboard.D) 
             && this.x < this.world.level.level_end_x 
@@ -327,6 +428,11 @@ class Character extends movableObject{
         }
     }
 
+    /**
+     * Checks whether the character is allowed to move left.
+     *
+     * @returns {boolean} True if moving left is allowed.
+     */
     checkLeft() {
         if ((this.world.keyboard.LEFT || this.world.keyboard.A) &&
             this.x > 100 &&
@@ -338,6 +444,11 @@ class Character extends movableObject{
         }
     }
 
+    /**
+     * Checks whether the character is allowed to jump.
+     *
+     * @returns {boolean} True if jumping is allowed.
+     */
     checkJump() {
         if ((this.world.keyboard.UP || this.world.keyboard.W || this.world.keyboard.SPACE) &&
             !this.isInAir() &&
@@ -349,16 +460,30 @@ class Character extends movableObject{
         }
     }
 
+    /**
+     * Moves the character to the right
+     * and updates the camera position.
+     */
     moveRight(){
         this.x += this.speed;
         this.world.camera_x = -this.x;
     };
 
+    /**
+     * Moves the character to the left
+     * and updates the camera position.
+     */
     moveLeft() {
         this.x -= this.speed;
         this.world.camera_x = -this.x;
     }
 
+    /**
+     * Collision offset values for the character.
+     * These values adjust the hitbox in relation to the character image.
+     *
+     * @type {{top: number, bottom: number, right: number, left: number}}
+     */
     offset = {
         top: 150,
         bottom: 15,
@@ -366,6 +491,12 @@ class Character extends movableObject{
         left: 25
     }
 
+    /**
+     * Checks the character's health points repeatedly.
+     * If health drops below 0, it is reset to 0.
+     * When health reaches 0, the character is marked as dead,
+     * the death animation starts and the lose state is triggered.
+     */
     checkIfDead() {    
     this.checkDeadInterval = setInterval(() => {
             if (this.hp < 0) {
@@ -381,6 +512,11 @@ class Character extends movableObject{
         }, 500)
     }
 
+    /**
+     * Throws a bottle when bottles are available
+     * and the E key is pressed.
+     * Prevents multiple throws while the key is held down.
+     */
     throwBottle() {   
         if (this.bottles == 0) return;
 

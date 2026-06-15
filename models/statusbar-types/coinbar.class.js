@@ -1,41 +1,38 @@
+/**
+ * Represents the coin status bar.
+ * Updates the current coin percentage.
+ */
 class Coinbar extends Statusbar {
 
-    
-
-
+    /**
+     * Creates a new coin status bar.
+     * 
+     * @param {World} world - The current game world.
+     */
     constructor(world) {
         super();
+
         this.img = img;
         this.x = 10;
         this.y = 55;
+
         this.setPercentage("Coins", 0);
+
         world = world;
+
         this.coinBarUpdate();
     }
 
-
+    /**
+     * Continuously updates the coin status bar.
+     */
     coinBarUpdate() {
-    this.updateInterval = setInterval(()=> {
-            switch (world.character.coins) {
-                case 1:
-                    world.coinStatusBar.setPercentage("Coins", 20);
-                    break;
-                case 2:
-                    world.coinStatusBar.setPercentage("Coins", 40);
-                    break;
-                case 3:
-                    world.coinStatusBar.setPercentage("Coins", 60);
-                    break;
-                case 4:
-                    world.coinStatusBar.setPercentage("Coins", 80);
-                    break;
-                case 5:
-                    world.coinStatusBar.setPercentage("Coins", 100);
-                    break;
+        this.updateInterval = setInterval(() => {
+            let percentage = world.character.coins * 20;
 
-                default: 
-                    break;
-            }
+            world.coinStatusBar
+                .setPercentage("Coins", percentage);
+
         }, 100);
     }
 }

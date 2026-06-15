@@ -1,12 +1,23 @@
+/**
+ * Represents a drawable game object.
+ */
 class DrawableObject {
 
     img;
     classImages = {};
 
+    /**
+     * Creates a new drawable object.
+     */
     constructor() {
 
     }
 
+    /**
+     * Draws the object on the canvas.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx) {
         ctx.globalAlpha = this.alpha ?? 1;
         ctx.save();
@@ -14,6 +25,11 @@ class DrawableObject {
         ctx.restore();
     }
 
+    /**
+     * Draws the object's hitbox for debugging purposes.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     drawHitbox(ctx) {
         if (this.checkObject()) {
         ctx.beginPath();
@@ -24,6 +40,11 @@ class DrawableObject {
         }
     }
 
+    /**
+     * Loads multiple images and stores them in the image cache.
+     * 
+     * @param {string[]} arr - Array of image paths.
+     */
     loadImages(arr) {
        arr.forEach(path => {
         let img = new Image();
@@ -32,6 +53,11 @@ class DrawableObject {
        });
     }
 
+    /**
+     * Draws the collision offset box for debugging purposes.
+     * 
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     drawOffsetBox(ctx) {
         if (this.checkObject()) {
         ctx.beginPath();
@@ -42,8 +68,13 @@ class DrawableObject {
         }
     }
 
+    /**
+     * Checks whether the object should display debug hitboxes.
+     * 
+     * @returns {boolean} True if the object supports debug hitboxes.
+     */
     checkObject() {
-        return this instanceof Character|| this instanceof Chicken || this instanceof Coin || this instanceof Bottle || this instanceof Endboss;
+        return this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof Bottle || this instanceof Endboss;
     }
 
     offset = {
@@ -53,5 +84,4 @@ class DrawableObject {
         left: 0
     }
 
-    
 }

@@ -1,3 +1,6 @@
+/**
+ * Represents a throwable bottle object.
+ */
 class ThrowBottle extends movableObject {
 
     img;
@@ -29,6 +32,14 @@ class ThrowBottle extends movableObject {
         this.fadeInterval
     ]
 
+    /**
+     * Creates a new throwable bottle.
+     * 
+     * @param {number} x - The start x position.
+     * @param {number} y - The start y position.
+     * @param {boolean} otherDirection - Indicates if the bottle should fly left.
+     * @param {World} world - The current game world.
+     */
     constructor(x, y, otherDirection, world) {
         super().loadImage('../img/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMG_THROW);
@@ -41,51 +52,78 @@ class ThrowBottle extends movableObject {
         this.decideAnimation();
     }
 
+    /**
+     * Starts throwing the bottle.
+     */
     throwB() {
         this.thrown = true;
+
         this.throwInterval = setInterval(() => {
-            if (this.splashes) {
-                clearInterval(this.throwInterval);
-                return;
-            }
-            if (this.otherDirection) {
-                this.x -= this.speed;
-            } else {
-                this.x += this.speed;
-            }
-            this.y -= this.speedY;
-            this.speedY -= this.acceleration;
-            let hitEnemy = this.getHitEnemy(this.world.level.enemies);
-            if (hitEnemy instanceof Endboss) {
-                hitEnemy.endbossGOTHIT(this);
-                clearInterval(this.throwInterval);
-            }
-            if (this.y >= 350 || hitEnemy) {
-                this.y = 350;
-                this.splashes = true;
-                clearInterval(this.throwInterval);
-            }
-            if (hitEnemy instanceof Chicken) {
-                hitEnemy.chickenGOTHIT(this, this.world);
-                clearInterval(this.throwInterval);
-            }
+            if (this.splashes) return this.stopThrow();
+
+            this.moveBottle();
+            this.checkBottleHit();
         }, 1000 / 25);
     }
 
+    /**
+     * Moves the bottle through the air.
+     */
+    moveBottle() {
+        this.otherDirection ? this.x -= this.speed : this.x += this.speed;
+
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+    }
+
+    /**
+     * Checks if the bottle hits an enemy or the ground.
+     */
+    checkBottleHit() {
+        let hitEnemy = this.getHitEnemy(this.world.level.enemies);
+        if (hitEnemy instanceof Endboss) {
+            hitEnemy.endbossGOTHIT(this);
+            this.stopThrow();
+        }
+        if (hitEnemy instanceof Chicken || hitEnemy instanceof Smallchicken) {
+            hitEnemy.chickenGOTHIT(this, this.world);
+            this.stopThrow();
+        }
+        if (this.y >= 350 || hitEnemy) {
+            this.y = 350;
+            this.splashes = true;
+            this.stopThrow();
+        }
+    }
+
+    /**
+     * Stops the throw movement interval.
+     */
+    stopThrow() {
+        clearInterval(this.throwInterval);
+        this.throwInterval = null;
+    }
+
+    /**
+     * Plays the splash animation.
+     */
     splashAnimation() {
         if (this.splashIndex === undefined) {
-        this.splashIndex = 0;
+            this.splashIndex = 0;
+        }
+        if (this.splashIndex < this.IMG_SPLASH.length) {
+
+            this.img = this.classImages[this.IMG_SPLASH[this.splashIndex]];
+            this.splashIndex++;
+            if (this.splashIndex >= this.IMG_SPLASH.length) {this.fadeOut()}
+        }
     }
 
-    if (this.splashIndex < this.IMG_SPLASH.length) {
-
-        this.img = this.classImages[this.IMG_SPLASH[this.splashIndex]];
-        this.splashIndex++;
-        if (this.splashIndex >= this.IMG_SPLASH.length) {this.fadeOut()}
-    }
-    
-    }
-
+    /**
+     * Plays the bottle rotation animation.
+     * 
+     * @param {string[]} images - The images used for the throw animation.
+     */
     throwAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -93,6 +131,9 @@ class ThrowBottle extends movableObject {
         this.currentImage++;
     }
 
+    /**
+     * Decides whether the bottle should show throw or splash animation.
+     */
     decideAnimation() {
         this.state = setInterval(() => {
             if (!this.splashes) {this.throwAnimation(this.IMG_THROW)}
@@ -102,6 +143,9 @@ class ThrowBottle extends movableObject {
         }, 1000 / 25);
     }
 
+    /**
+     * Fades the bottle out after the splash animation.
+     */
     fadeOut() {
     this.fadeInterval = setInterval(() => {
 
@@ -116,6 +160,12 @@ class ThrowBottle extends movableObject {
     }, 100);
 }
 
+    /**
+     * Checks if the bottle collides with an enemy.
+     * 
+     * @param {movableObject} e - The enemy to check collision with.
+     * @returns {boolean} True if the bottle collides with the enemy.
+     */
 bottleColideEnemy(e) {
     return  this.x + this.width > e.x + e.offset.left &&
         this.y + this.height > e.y + e.offset.top &&
@@ -124,11 +174,14 @@ bottleColideEnemy(e) {
     
 }
 
-
+    /**
+     * Returns the enemy hit by the bottle.
+     * 
+     * @param {movableObject[]} enemies - The enemies to check.
+     * @returns {movableObject|undefined} The hit enemy or undefined.
+     */
 getHitEnemy(enemies) {
     return enemies.find(e => this.bottleColideEnemy(e));
 }
-
-    
 
 }

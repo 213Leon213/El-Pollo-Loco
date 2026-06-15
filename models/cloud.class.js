@@ -1,9 +1,15 @@
+/**
+ * Represents a cloud in the background.
+ */
 class Cloud extends movableObject {
 
     height = 400;
     width = 700;
     speed = 0.1;
 
+    /**
+     * Creates a new cloud object.
+     */
     constructor() {
         super().loadImage('../img/img/5_background/layers/4_clouds/1.png');
         this.y = 1;
@@ -12,14 +18,11 @@ class Cloud extends movableObject {
         this.width = 700;
     }
 
-
-    //img/img/5_background/layers/4_clouds/1.png
-
+    /**
+     * Starts the cloud movement.
+     */
     moveClouds() {
         this.moveLeft();
     }
-    
-
 
 }
-

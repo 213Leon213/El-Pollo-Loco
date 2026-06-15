@@ -1,22 +1,57 @@
+/** @type {HTMLCanvasElement} The game canvas element. */
 let canvas;
+
+/** @type {HTMLImageElement} Global image object. */
 let img = new Image();
+
+/** @type {World} The current game world. */
 let world;
+
+/** @type {Keyboard} Handles keyboard input states. */
 let keyboard = new Keyboard();
+
+/** @type {HTMLElement} The start menu screen. */
 let menu;
+
+/** @type {HTMLElement} The win screen. */
 let win;
+
+/** @type {HTMLElement} The game over screen. */
 let gameOver;
+
+/** @type {HTMLElement} The mute button. */
 let mute;
+
+/** @type {HTMLImageElement} The mute icon image. */
 let muteImg;
+
+/** @type {HTMLElement} The controls explanation screen. */
 let controls;
+
+/** @type {HTMLElement} The mobile controls container. */
 let mobile;
+
+/** @type {HTMLImageElement} The start menu image. */
 let menuImg;
+
+/** @type {HTMLImageElement} The game over image. */
 let gameOverImg;
+
+/** @type {HTMLImageElement} The game won image. */
 let gameWonImg;
+
+/** @type {HTMLImageElement} The controls screen image. */
 let controlsImg;
+
+/** @type {HTMLElement} The top icon button container. */
 let topContainer;
+
+/** @type {HTMLElement} The game container. */
 let gameContainer;
 
-
+/**
+ * Initializes all important DOM elements and applies the saved mute state.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     menu = document.getElementById('start-screen');
@@ -31,11 +66,12 @@ function init() {
     mobile = document.getElementById('mobile-controls');
     topContainer = document.getElementById('top-icon-container');
     gameContainer = document.getElementById('game-container');
-    applyMuteState();
-    
+    applyMuteState();   
 }
 
-
+/**
+ * Starts the game and creates a new world.
+ */
 function startGame() {
     buttonClickSound.play();
     menu.classList.add("hidden");
@@ -46,6 +82,9 @@ function startGame() {
     checkDeviceMode();
 }
 
+/**
+ * Restarts the game after win or lose.
+ */
 function retry() {
     world.ctx.clearRect(0, 0, world.canvas.width, world.canvas.height);
     world.destroyWorld();
@@ -60,12 +99,18 @@ function retry() {
     music.play();
 }
 
+/**
+ * Shows the controls explanation screen.
+ */
 function checkControls() {
     mobile.classList.add('hidden');
     menu.classList.add('hidden');
     controls.classList.remove('hidden');
 }
 
+/**
+ * Returns to the main menu and stops the current game.
+ */
 function backToMenu() {
     mobile.classList.add('hidden');
     world?.ctx?.clearRect(0, 0, world.canvas.width, world.canvas.height);
@@ -79,6 +124,11 @@ function backToMenu() {
     menu.classList.remove("hidden");
 }
 
+/**
+ * Handles keydown events and updates keyboard states.
+ * 
+ * @param {KeyboardEvent} event - The keydown event.
+ */
 document.addEventListener('keydown', (event) => {
     switch (event.keyCode) {
         case 68:
@@ -111,6 +161,11 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+/**
+ * Handles keyup events and resets keyboard states.
+ * 
+ * @param {KeyboardEvent} event - The keyup event.
+ */
 document.addEventListener('keyup', (event) => {
     switch (event.keyCode) {
         case 68:
@@ -143,7 +198,10 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-
+/**
+ * Toggles fullscreen mode for the canvas,
+ * screens and game container.
+ */
 function toggleFullscreen() {
     canvas.classList.toggle("fullscreen-mode");
     menu.classList.toggle("fullscreen-mode");
@@ -155,6 +213,9 @@ function toggleFullscreen() {
     makeMobileBtnResp();
 }
 
+/**
+ * Toggles fullscreen classes for screen images.
+ */
 function giveImgFullscreen() {
     menuImg.classList.toggle("fullscreen-mode");
     gameOverImg.classList.toggle("fullscreen-mode");
