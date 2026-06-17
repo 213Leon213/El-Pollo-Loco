@@ -55,25 +55,26 @@
     <div id="game-container">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="start-screen" class="">
-        <button class="play-button buttons" id="playButton" onclick="startGame()">Play</button>
-        <button class="controls-button buttons" id="controlsButton" onclick="checkControls()">Controls</button>
-        <img src="/img/img/9_intro_outro_screens/start/startscreen_1.png" id="start-screen-img">
-    </div>
-    <div id="game-over-screen" class="hidden">
-        <img src="/img/img/You won, you lost/Game Over.png" id="game-over-img">
-        <button class="buttons retry-button" id="gameOverRetryButton" onclick="retry()">Retry</button>
-        <button class="buttons menu-button" id="gameOverBackbutton" onclick="backToMenu()">Menu</button>
-    </div>
-    <div id="game-won" class="hidden">
-        <img src="/img/img/You won, you lost/You won A.png" id="game-won-img">
-        <button class="buttons retry-button" id="gameWinRetryButton" onclick="retry()">Retry</button>
-        <button class="buttons menu-button" id="gameWinBackbutton" onclick="backToMenu()">Menu</button>
-    </div>    
-    <div id="control-explanation" class="hidden">
-        <img src="/img/img/controls/control_screen.png" id="controls-img">
-        <button class="buttons retry-button" id="controlsPlayButton" onclick="startGame()">Play</button>
-        <button class="buttons menu-button" id="controlsBackButton" onclick="backToMenu()">Menu</button>
-    </div>
+            <button class="play-button buttons" id="playButton" onclick="startGame()">Play</button>
+            <button class="controls-button buttons" id="controlsButton" onclick="checkControls()">Controls</button>
+            <img src="/img/img/9_intro_outro_screens/start/startscreen_1.png" id="start-screen-img">
+            <a id="impressum" href="/html/impressum.html">Impressum</a>
+        </div>
+        <div id="game-over-screen" class="hidden">
+            <img src="/img/img/You won, you lost/Game Over.png" id="game-over-img">
+            <button class="buttons retry-button" id="gameOverRetryButton" onclick="retry()">Retry</button>
+            <button class="buttons menu-button" id="gameOverBackbutton" onclick="backToMenu()">Menu</button>
+        </div>
+        <div id="game-won" class="hidden">
+            <img src="/img/img/You won, you lost/You won A.png" id="game-won-img">
+            <button class="buttons retry-button" id="gameWinRetryButton" onclick="retry()">Retry</button>
+            <button class="buttons menu-button" id="gameWinBackbutton" onclick="backToMenu()">Menu</button>
+        </div>    
+        <div id="control-explanation" class="hidden">
+            <img src="/img/img/controls/control_screen.png" id="controls-img">
+            <button class="buttons retry-button" id="controlsPlayButton" onclick="startGame()">Play</button>
+            <button class="buttons menu-button" id="controlsBackButton" onclick="backToMenu()">Menu</button>
+        </div>
         <div id="mobile-controls" class="hidden">
             <button id="leftBtn" class="buttons mobile-buttons">&lt;</button>
             <button id="jumpBtn" class="buttons"><img id="jump-img" src="/img/img/2_character_pepe/3_jump/J-34.png" alt="jump"></button>

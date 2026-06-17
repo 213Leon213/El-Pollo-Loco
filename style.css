@@ -224,3 +224,10 @@ button {
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
 }
+
+#impressum {
+    cursor: pointer;
+    color: orange;
+    position: relative;
+    z-index: 30;
+}
