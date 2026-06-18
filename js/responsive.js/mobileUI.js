@@ -59,9 +59,15 @@ function hideTouchButtons() {
 }
 
 /**
- * Enables left movement while touching the left button.
+ * Enables left movement while touching the left button
+ * and prevents the default browser behavior.
  */
-leftBtn.addEventListener("touchstart", () => keyboard.LEFT = true);
+leftBtn.addEventListener("touchstart", (e) => {
+    if (e.cancelable) {
+        e.preventDefault();
+    }
+    keyboard.LEFT = true;
+});
 
 /**
  * Stops left movement when touch ends.
@@ -69,9 +75,15 @@ leftBtn.addEventListener("touchstart", () => keyboard.LEFT = true);
 leftBtn.addEventListener("touchend", () => keyboard.LEFT = false);
 
 /**
- * Enables right movement while touching the right button.
+ * Enables right movement while touching the right button
+ * and prevents the default browser behavior.
  */
-rightBtn.addEventListener("touchstart", () => keyboard.RIGHT = true);
+rightBtn.addEventListener("touchstart", (e) => {
+    if (e.cancelable) {
+        e.preventDefault();
+    }
+    keyboard.RIGHT = true;
+});
 
 /**
  * Stops right movement when touch ends.
@@ -79,9 +91,15 @@ rightBtn.addEventListener("touchstart", () => keyboard.RIGHT = true);
 rightBtn.addEventListener("touchend", () => keyboard.RIGHT = false);
 
 /**
- * Enables jumping while touching the jump button.
+ * Enables jumping while touching the jump button
+ * and prevents the default browser behavior.
  */
-jumpBtn.addEventListener("touchstart", () => keyboard.SPACE = true);
+jumpBtn.addEventListener("touchstart", (e) => {
+    if (e.cancelable) {
+        e.preventDefault();
+    }
+    keyboard.SPACE = true;
+});
 
 /**
  * Stops jumping when touch ends.
@@ -89,9 +107,15 @@ jumpBtn.addEventListener("touchstart", () => keyboard.SPACE = true);
 jumpBtn.addEventListener("touchend", () => keyboard.SPACE = false);
 
 /**
- * Enables bottle throwing while touching the throw button.
+ * Enables bottle throwing and prevents default
+ * browser touch behavior while the throw button is touched.
  */
-throwBtn.addEventListener("touchstart", () => keyboard.E = true);
+throwBtn.addEventListener("touchstart", (e) => {
+    if (e.cancelable) {
+        e.preventDefault();
+    }
+    keyboard.E = true;
+});
 
 /**
  * Stops bottle throwing when touch ends.

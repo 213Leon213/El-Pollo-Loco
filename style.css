@@ -219,6 +219,7 @@ button {
 }
 
 .mobile-buttons {
+    touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
