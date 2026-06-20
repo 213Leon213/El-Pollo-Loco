@@ -11,7 +11,7 @@ class Cloud extends movableObject {
      * Creates a new cloud object.
      */
     constructor() {
-        super().loadImage('../img/img/5_background/layers/4_clouds/1.png');
+        super().loadImage('./img/img/5_background/layers/4_clouds/1.png');
         this.y = 1;
         this.moveClouds();
         this.height = 400;

@@ -11,7 +11,7 @@ document.addEventListener("keydown", (event) => {
  * Mutes all game sounds and saves the mute state.
  */
 function muteAllSounds() {
-    muteImg.src = "/img/img/icons/mute.png";
+    muteImg.src = "./img/img/icons/mute.png";
     localStorage.setItem("mute", "true");
     muteSoundsRight();
 }
@@ -21,7 +21,7 @@ function muteAllSounds() {
  */
 function unmuteAllSounds() {
     localStorage.setItem("mute", "false");
-    muteImg.src = "/img/img/icons/unmute.png";
+    muteImg.src = "./img/img/icons/unmute.png";
     unmuteSoundsRight();
 }
 
@@ -40,8 +40,8 @@ function checkIfMuted() {
 function setIcon() {
     muteImg = document.getElementById("muteImg");
 
-    const muted = "/img/img/icons/mute.png";
-    const unmuted = "/img/img/icons/unmute.png";
+    const muted = "./img/img/icons/mute.png";
+    const unmuted = "./img/img/icons/unmute.png";
 
     if (checkIfMuted()) {
         muteImg.src = muted;

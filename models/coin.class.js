@@ -12,7 +12,7 @@ class Coin extends Objects {
     constructor() {
         super();
         this.img = new Image();
-        this.img.src = "../img/img/8_coin/coin_1.png";
+        this.img.src = "./img/img/8_coin/coin_1.png";
     }
 
     /**

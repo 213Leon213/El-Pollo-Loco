@@ -9,20 +9,20 @@ class Smallchicken extends movableObject{
     on = true;
     
     IMG_WALKING = [
-        '../img/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
-        '../img/img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
-        '../img/img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
+        './img/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
+        './img/img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
+        './img/img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ];
 
     IMG_DEAD = [
-        '../img/img/3_enemies_chicken/chicken_small/2_dead/dead.png'
+        './img/img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
     /**
      * Creates a new small chicken enemy.
      */
     constructor() {
-        super().loadImage('../img/img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
+        super().loadImage('./img/img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMG_WALKING);
         this.speed = this.speed + Math.random() * 0.7;
         this.x = 720 + Math.random() * 1000;
@@ -46,7 +46,7 @@ class Smallchicken extends movableObject{
     chickenDiesAnimation(world) {
        chickenDiesSound.play();
        this.deadInterval = setInterval(() => {
-           this.img.src = "../img/img/3_enemies_chicken/chicken_small/2_dead/dead.png";
+           this.img.src = "./img/img/3_enemies_chicken/chicken_small/2_dead/dead.png";
        },100)
        setTimeout(() => {
             clearInterval(this.deadInterval);

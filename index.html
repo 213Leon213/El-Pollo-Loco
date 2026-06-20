@@ -4,34 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/css/button.css">
-    <link rel="stylesheet" href="/css/resposive.css">
-    <link rel="icon" type="image/png" href="/img/img/6_salsa_bottle/salsa_bottle.png">
-    <script src="/models/drawableObject.class.js"></script>
-    <script src="/models/world.class.js"></script>
-    <script src="/models/statusbar.class.js"></script>
-    <script src="/models/statusbar-types/healthbar.class.js"></script>
-    <script src="/models/statusbar-types/coinbar.class.js"></script>
-    <script src="/models/statusbar-types/bottlebar.class.js"></script>
-    <script src="/models/statusbar-types/endboss-healthbar.class.js"></script>
-    <script src="/models/movable-objects.class.js"></script>
-    <script src="/models/cloud.class.js"></script>
-    <script src="/models/objects.class.js"></script>
-    <script src="/models/coin.class.js"></script>
-    <script src="/models/character.class.js"></script>
-    <script src="/models/bottle.class.js"></script>
-    <script src="/models/chicken.class.js"></script>
-    <script src="/models/chicken_small.class.js"></script>
-    <script src="/models/background-object.class.js"></script>
-    <script src="/models/keyboard.class.js"></script>
-    <script src="/models/endboss.class.js"></script>
-    <script src="/models/level.class.js"></script>
-    <script src="/models/levels/level1.js"></script>
-    <script src="/models/throw-bottle.class.js"></script>
-    <script src="/script.js"></script>
-    <script src="/js/sounds.js"></script>
-    <script src="/js/mute-script.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./css/button.css">
+    <link rel="stylesheet" href="./css/resposive.css">
+    <link rel="icon" type="image/png" href="./img/img/6_salsa_bottle/salsa_bottle.png">
+    <script src="./models/drawableObject.class.js"></script>
+    <script src="./models/world.class.js"></script>
+    <script src="./models/statusbar.class.js"></script>
+    <script src="./models/statusbar-types/healthbar.class.js"></script>
+    <script src="./models/statusbar-types/coinbar.class.js"></script>
+    <script src="./models/statusbar-types/bottlebar.class.js"></script>
+    <script src="./models/statusbar-types/endboss-healthbar.class.js"></script>
+    <script src="./models/movable-objects.class.js"></script>
+    <script src="./models/cloud.class.js"></script>
+    <script src="./models/objects.class.js"></script>
+    <script src="./models/coin.class.js"></script>
+    <script src="./models/character.class.js"></script>
+    <script src="./models/bottle.class.js"></script>
+    <script src="./models/chicken.class.js"></script>
+    <script src="./models/chicken_small.class.js"></script>
+    <script src="./models/background-object.class.js"></script>
+    <script src="./models/keyboard.class.js"></script>
+    <script src="./models/endboss.class.js"></script>
+    <script src="./models/level.class.js"></script>
+    <script src="./models/levels/level1.js"></script>
+    <script src="./models/throw-bottle.class.js"></script>
+    <script src="./script.js"></script>
+    <script src="./js/sounds.js"></script>
+    <script src="./js/mute-script.js"></script>
     
 
 </head>
@@ -44,11 +44,11 @@
          </div>
     </div>
     
-    <img src="/img/img/menu_background/ChatGPT Image 15. Apr. 2026, 10_36_40.png" class="background">
+    <img src="./img/img/menu_background/ChatGPT Image 15. Apr. 2026, 10_36_40.png" class="background">
     <div class="top-icon-buttons-container" id="top-icon-container">
-    <button class="mute-button" id="muteGame" onclick="muteOrUnmute()"><img src="/img/img/icons/mute.png" class="mute-icon" id="muteImg"></button>
+    <button class="mute-button" id="muteGame" onclick="muteOrUnmute()"><img src="./img/img/icons/mute.png" class="mute-icon" id="muteImg"></button>
     <button id="fullscreen-btn" onclick="toggleFullscreen()">
-        <img src="/img/img/icons/fullscreen_icon_transparent.png" alt="fullscreen button" id="fullscreen-icon" style="width: 32px; height: 32px;">
+        <img src="./img/img/icons/fullscreen_icon_transparent.png" alt="fullscreen button" id="fullscreen-icon" style="width: 32px; height: 32px;">
     </button>
     </div>
     
@@ -57,33 +57,33 @@
         <div id="start-screen" class="">
             <button class="play-button buttons" id="playButton" onclick="startGame()">Play</button>
             <button class="controls-button buttons" id="controlsButton" onclick="checkControls()">Controls</button>
-            <img src="/img/img/9_intro_outro_screens/start/startscreen_1.png" id="start-screen-img">
-            <a id="impressum" href="/html/impressum.html">Impressum</a>
+            <img src="./img/img/9_intro_outro_screens/start/startscreen_1.png" id="start-screen-img">
+            <a id="impressum" href="./html/impressum.html">Impressum</a>
         </div>
         <div id="game-over-screen" class="hidden">
-            <img src="/img/img/You won, you lost/Game Over.png" id="game-over-img">
+            <img src="./img/img/You won, you lost/Game Over.png" id="game-over-img">
             <button class="buttons retry-button" id="gameOverRetryButton" onclick="retry()">Retry</button>
             <button class="buttons menu-button" id="gameOverBackbutton" onclick="backToMenu()">Menu</button>
         </div>
         <div id="game-won" class="hidden">
-            <img src="/img/img/You won, you lost/You won A.png" id="game-won-img">
+            <img src="./img/img/You won, you lost/You won A.png" id="game-won-img">
             <button class="buttons retry-button" id="gameWinRetryButton" onclick="retry()">Retry</button>
             <button class="buttons menu-button" id="gameWinBackbutton" onclick="backToMenu()">Menu</button>
         </div>    
         <div id="control-explanation" class="hidden">
-            <img src="/img/img/controls/control_screen.png" id="controls-img">
+            <img src="./img/img/controls/control_screen.png" id="controls-img">
             <button class="buttons retry-button" id="controlsPlayButton" onclick="startGame()">Play</button>
             <button class="buttons menu-button" id="controlsBackButton" onclick="backToMenu()">Menu</button>
         </div>
         <div id="mobile-controls" class="hidden">
             <button id="leftBtn" class="buttons mobile-buttons" oncontextmenu="return false;">&lt;</button>
-            <button id="jumpBtn" class="buttons mobile-buttons" oncontextmenu="return false;"><img id="jump-img" src="/img/img/2_character_pepe/3_jump/J-34.png" alt="jump"></button>
+            <button id="jumpBtn" class="buttons mobile-buttons" oncontextmenu="return false;"><img id="jump-img" src="./img/img/2_character_pepe/3_jump/J-34.png" alt="jump"></button>
             <button id="rightBtn" class="buttons mobile-buttons" oncontextmenu="return false;">&gt;</button>
-            <button id="throwBtn" class="buttons mobile-buttons" oncontextmenu="return false;"><img id="throw-img" src="/img/img/6_salsa_bottle/salsa_bottle.png" alt="salsa_bottle"></button>
+            <button id="throwBtn" class="buttons mobile-buttons" oncontextmenu="return false;"><img id="throw-img" src="./img/img/6_salsa_bottle/salsa_bottle.png" alt="salsa_bottle"></button>
         </div>
     </div>
     
 
-    <script src="/js/responsive.js/mobileUI.js"></script>
+    <script src="./js/responsive.js/mobileUI.js"></script>
 </body>
 </html>
