@@ -375,25 +375,68 @@ class World {
     }
 
     /** Deletes all status bar intervals. */
-    deleteStatusbarIntervals() { /* dein Code unverändert */ }
+    deleteStatusbarIntervals() {
+        clearInterval(this.healthStatusBar.updateInterval);
+        this.healthStatusBar.updateInterval = null;
+        clearInterval(this.coinStatusBar.updateInterval);
+        this.coinStatusBar.updateInterval = null;
+        clearInterval(this.bottleStatusBar.updateInterval);
+        this.bottleStatusBar.updateInterval = null;
+        clearInterval(this.endbossHealthBar.updateInterval);
+        this.endbossHealthBar.updateInterval = null;
+    }
 
     /** Deletes all enemy intervals. */
-    deleteEnemyIntervals() { /* dein Code unverändert */ }
+    deleteEnemyIntervals() {
+        this.level.enemies.forEach(e => {
+        if (e instanceof Endboss) {
+            this.deleteEndbossIntervals(e);
+            e.stopAnimation();
+            e.stopMoveLeft();
+        }
+        if (e instanceof Chicken || e instanceof Smallchicken) {
+            e.stopAnimation();
+            e.stopMoveLeft();
+            clearInterval(e.deadInterval);
+            e.deadInterval = null;
+        }
+    });
+    }
 
     /**
      * Deletes all endboss intervals.
      * 
      * @param {Endboss} e - The endboss.
      */
-    deleteEndbossIntervals(e) { /* dein Code unverändert */ }
+    deleteEndbossIntervals(e) {
+        e.intervals.forEach((i, index) => {
+            clearInterval(i);
+            this.worldInterval[index] = null;
+        })
+    }
 
     /** Deletes all world intervals. */
-    deleteWorldIntervals() { /* dein Code unverändert */ }
+    deleteWorldIntervals() {
+        this.worldInterval.forEach((i, index)=> {
+            clearInterval(i);
+            this.worldInterval[index] = null;
+        })
+    }
 
     /** Deletes all character intervals. */
-    deleteCharacterIntervals() { /* dein Code unverändert */ }
+    deleteCharacterIntervals() {
+        this.character.intervals.forEach((i, index)=>{
+            clearInterval(i);
+            this.character.intervals[index] = null;
+        })
+    }
 
     /** Deletes all movable object intervals. */
-    deleteMovableObjectsIntervals() { /* dein Code unverändert */ }
+    deleteMovableObjectsIntervals() {
+        this.character.mOIntervals.forEach((i, index) => {
+            clearInterval(i);
+            this.character.mOIntervals[index] = null;
+        })
+    }
 
 }

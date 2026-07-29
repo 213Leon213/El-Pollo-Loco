@@ -11,7 +11,8 @@ class Endboss extends movableObject{
     alertActivated = false;
     damage = 50;
     speedY = 0;
-    acceleration = 3;
+    speed = 1.5;
+    acceleration = 2;
 
     Images_WALKING = [
         "./img/img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -60,7 +61,8 @@ class Endboss extends movableObject{
         this.hurtInterval,
         this.alertCheckInterval,
         this.attackInterval,
-        this.gravityInterval
+        this.gravityInterval,
+        this.leftMovementInterval
     ]
 
     /**
@@ -345,15 +347,27 @@ class Endboss extends movableObject{
      * Handles switching between attack states.
      */
     handleAttackState() {
-        this.endbossMovesTowardsPlayer();
+
+        const nextState = this.isAttacking && !this.dead && !this.hurt
+            ? "walkingAttack"
+            : "jumpAttack";
+
+        if (nextState == "walkingAttack") {
+            this.endbossMovesTowardsPlayer();
+        }
+
+        if (this.currentState === nextState) return;
+
+        this.currentState = nextState;
         this.stopAnimation();
         this.currentImage = 0;
 
-        if (this.isAttacking && !this.dead && !this.hurt) {
+        if (nextState === "walkingAttack") {
             this.startWalkingAttack();
         } else {
             this.startJumpAttack();
         }
+        
     }
 
     /**
@@ -372,7 +386,7 @@ class Endboss extends movableObject{
         if (this.hurt) return;
 
         this.animate(this.Images_ATTACK);
-        this.speedY = 10;
+        this.speedY = 20;
         this.isAttacking = true;
     }
     
@@ -418,22 +432,23 @@ class Endboss extends movableObject{
 
         clearInterval(this.alertCheckInterval);
         this.alertCheckInterval = null;
+
+        clearInterval(this.leftMovementInterval);
+        this.leftMovementInterval = null;
     }
 
     /**
      * Moves the endboss towards the player.
      */
     endbossMovesTowardsPlayer() {
-        const endbossCenterX = this.x + this.width / 2;
-        const playerCenterX = this.world.character.x + this.world.character.width / 2;
+        if (this.leftMovementInterval) return;
+        if (this.moveTimeout) return;
 
-        this.x += (playerCenterX - endbossCenterX) * this.speed;
-
-        if (playerCenterX > endbossCenterX) {
-            this.otherDirection = true;
-        } else {
-            this.otherDirection = false;
-        }
+        this.moveTimeout = setTimeout(()=> {
+        this.leftMovementInterval = setInterval( () => {
+            this.x -= this.speed;
+        }, 1000 / 60)
+        }, 1000);
     }
 
 }
